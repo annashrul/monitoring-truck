@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Boostrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <!-- Style -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <style>
+        *{
+            font-family: 'Poppins', sans-serif;
+        }
+        .bold {
+            font-weight: bold !important;
+        }
+        .wrapper-card{
+            margin-right: 10px;
+            border:2px solid #EEEEEE;
+            padding:25px;
+            text-align: center;
+            border-radius: 10px;
+            color: grey;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .wrapper-card:hover{
+            border-color: red !important;
+        }
+        .select2-container--default .select2-selection--single{
+            padding:25px;
+            height: auto;
+            margin-right: 10px;
+            font-weight: bold;
+            position: relative;
+            border: 2px solid #EEEEEE !important;
+            border-radius: 10px !important;
+            align-content: center !important;
+        }
+        span.select2-selection--single[aria-expanded=true] {
+            border-color: red !important;
+        }
+        .select2-selection--single:hover{
+            border-color: red !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow b{
+            border-style: none !important;
+        }
+        .js-example-basic-single{
+            width: 100%;padding:20px
+        }
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            /*line-height: normal!important;*/
+        }
+        .select2-container .select2-selection--single .select2-selection__rendered {
+            /*white-space: normal!important;*/
+            color: grey !important;
+        }
+        .select2-container--default .select2-selection--single .select2-selection__placeholder{
+            color: grey !important;
+        }
+        .select2-search__field:focus
+        {border: 1px solid #3c8dbc !important;outline: none !important;}
+        .select2-container--default .select2-search--dropdown .select2-search__field{
+            border-bottom: 1px solid #EEEEEE !important;
+            border-top: none !important;
+            border-left: none !important;
+            border-right: none !important;
+            /*border-radius: 10px !important;*/
+        }
+        .select2-container--default .select2-search--dropdown:focus{
+            border: 1px solid #EEEEEE !important;
+            border-radius: 10px !important;
+        }
+        .select2-dropdown{
+            border: 1px solid #EEEEEE !important;
+            border-radius: 10px !important;
+        }
+        .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable{
+            background-color: white !important;
+        }
+        .input-custom{
+            padding: 27px !important;
+            height: auto !important;
+            border: 2px solid #EEEEEE;
+            border-radius: 10px;
+            color: grey !important;
+            font-weight: bold;
+        }
+        select.form-control{
+            padding: 27px !important;
+            height: auto !important;
+            border: 2px solid #EEEEEE;
+            border-radius: 10px;
+            color: grey !important;
+            font-weight: bold;
+        }
+        select:focus, .input-custom:focus{
+            outline: none !important;
+            border-color: red !important;
+            box-shadow:none !important;
+
+        }
+        .input-custom-group{
+            padding: 20px !important;
+            height: auto !important;
+            border: 2px solid #EEEEEE;
+            border-radius: 10px;
+            color: grey !important;
+            font-weight: bold;
+        }
+        .input-custom-group>.form-control{
+            border: none !important;
+            text-align: center;
+            color: grey !important;
+            font-weight: bold;
+        }
+        .input-custom-group>.form-control:focus{
+            outline: none !important;
+            border-color: red !important;
+            box-shadow:none !important;
+
+        }
+        button.btn-no-border{
+            border: none !important;
+        }
+        button.btn-no-border:hover{
+            border: none !important;
+            background-color: transparent !important;
+            color: grey !important;
+            font-weight: bold;
+        }
+        button.btn-no-border:focus{
+            border: none !important;
+            background-color: transparent !important;
+            color: grey !important;
+            font-weight: bold;
+            box-shadow:none !important;
+        }
+        .wrapper-card-weight{
+            margin-left: 10px;
+            border:2px solid #EEEEEE;
+            padding:15px;
+            text-align: right;
+            border-radius: 10px;
+            color: grey;
+            font-weight: normal;
+            background-color: #EEEEEE;
+        }
+        input[readonly]{
+            background-color: transparent !important;
+            cursor: not-allowed;
+        }
+        /**/
+        /*.btn-outline-secondary:not(:disabled):not(.disabled).active, .btn-outline-secondary:not(:disabled):not(.disabled):active, .show>.btn-outline-secondary.dropdown-toggle{*/
+            /*background-color: transparent !important;*/
+            /*color: grey !important;*/
+            /*font-weight: bold;*/
+        /*}*/
+
+        .btn-action{
+            padding: 15px;
+            border-radius: 10px;
+            border-color: transparent;
+            font-weight: bold;
+        }
+        .btn-add{
+            background-color: #EDF2FF;
+            color: black;
+        }
+        .btn-del{
+            background-color: #F7941E;
+            color: white;
+        }
+        .btn-add:hover{
+            background-color: #EDF2FF;
+            color: black;
+            border-color: #EDF2FF;
+        }
+        .btn-del:hover{
+            background-color: #F7941E;
+            color: white;
+            border-color: #F7941E;
+
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light"  style="padding-left:0;margin-left: 95px;margin-right: 95px;">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link bold" href="#">
+                    <img style="height:100px;width: 150px" src="https://bkk.smkn4kuningan.sch.id/storage/mitra/1628411658-pt-toyota-motor-manufacturing-indonesia.png" alt="">
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item active" style="text-align: right">
+                <a class="nav-link bold" href="#">Delivery Truck</a>
+                <a class="nav-link" href="#">Sunday, 09-16-2022 07:11 AM</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<hr style="padding-top: 0;margin-top: 0;border-width: 2px">
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 bold p-0">
+            <i class="fa fa-truck" style="font-size: 30px;border: 2px solid #EEEEEE;border-radius: 100%;padding:10px;margin-right: 10px"></i>
+            Detail Pemilihan Truck
+        </div>
+        <div class="col-md-12 p-0 bold mt-4">
+            Pilih Jenis Truck
+        </div>
+
+        <div class="col-md-2 mt-4 wrapper-card">
+            Truck Size S
+        </div>
+        <div class="col-md-2 mt-4 wrapper-card">
+            Truck Size M
+        </div>
+        <div class="col-md-2 mt-4 wrapper-card">
+            Truck Size L
+        </div>
+    </div>
+</div>
+<div class="container mt-4 p-0">
+    <hr style="border-style: dashed;border-width: 1px;border-color: #eeeeee">
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 bold p-0">
+            <i class="fa fa-sitemap" style="font-size: 30px;border: 2px solid #EEEEEE;border-radius: 100%;padding:10px;margin-right: 10px"></i>
+            Pemilihan Destinasi
+        </div>
+        <div class="col-md-4 mt-4 p-0" style="">
+            <select class="js-example-basic-single" name="state" id="address">
+                <option value="">Pilih destinasi</option>
+            </select>
+        </div>
+        <div class="col-md-3 mt-4 p-0" style="">
+            <select class="js-example-basic-single" name="state" id="province">
+                <option value="">Pilih destinasi</option>
+            </select>
+        </div>
+        <div class="col-md-3 mt-4 p-0" style="">
+            <select class="js-example-basic-single" name="state" id="city">
+                <option value="">Pilih destinasi</option>
+            </select>
+        </div>
+        <div class="col-md-2 mt-4 p-0" style="">
+            <input type="text" class="form-control input-custom" placeholder="masukkan kode pos">
+        </div>
+
+    </div>
+    <div class="container mt-4">
+        <div class="row" style="margin-left: 20px;padding-right: 20px;margin-bottom: 20px">
+            <div class="col-md-12 bold p-0">
+                <i class="fa fa-cube" style="font-size: 30px;border: 2px solid #EEEEEE;border-radius: 100%;padding:10px;margin-right: 10px"></i>
+                Pemilihan Box
+            </div>
+            <div class="col-md-12" id="container-box"></div>
+
+            <div class="col-md-2 mr-3 p-0 mt-4">
+                <button onclick="addBox('item_1')" class="btn btn-outline-secondary btn-block btn-action btn-add"><i class="fa fa-plus"></i> TAMBAH BOX</button>
+            </div>
+            <div class="col-md-2 p-0 mt-4">
+                <button onclick="delBox()" class="btn btn-outline-secondary btn-block btn-action btn-del"><i class="fa fa-trash-o"></i> DELETE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
+
+<script>
+    // In your Javascript (external.js resource or <script> tag)
+    $(document).ready(function() {
+        var dataAddress = [{
+            id: 0,
+            text: '<div style="color:red"><i class="fa fa-map-marker"></i> <b>Toyota Bandung</b></div><div style="color: grey">Jl. A. Yani No.336-338, Cicadas</div>',
+            title: 'toyota-bandung'
+        }];
+        var dataProvince = [{
+            id: 0,
+            text: '<div style="color:red"><i class="fa fa-map-marker"></i> <b>Jawabarat</b></div><div style="color: grey">-</div>',
+            title: 'toyota-bandung'
+        }];
+        var dataCity = [{
+            id: 0,
+            text: '<div style="color:red"><i class="fa fa-map-marker"></i> <b>Bandung</b></div><div style="color: grey">-</div>',
+            title: 'toyota-bandung'
+        }];
+        $('#address').select2({
+            placeholder: 'masukkan alamat',
+            data: dataAddress,
+            escapeMarkup: function(markup) {
+                return markup;
+            }
+        });
+        $('#province').select2({
+            placeholder: 'masukkan provinsi',
+            data: dataProvince,
+            escapeMarkup: function(markup) {
+                return markup;
+            }
+        });
+        $('#city').select2({
+            placeholder: 'masukkan kota',
+            data: dataCity,
+            escapeMarkup: function(markup) {
+                return markup;
+            }
+        });
+        templateBox(1);
+    });
+
+    var no=1;
+    function addBox(){
+        no = no+1;
+        setTimeout(function(){
+            templateBox(no);
+        },100)
+    }
+    function delBox(){
+        if(no>1){
+            no = no-1;
+            setTimeout(function(){
+                templateBox(no);
+            },100)
+        }
+
+    }
+
+
+    function minBoxItem(id){
+        var attrId=$(`#${id}`);
+        var getValInput=parseInt(attrId.val(),10);
+        if(getValInput>1){
+            getValInput=getValInput-1;
+            attrId.val(getValInput);
+            $(`#weight_${id.split("_")[1]}`).html(getValInput)
+        }
+
+    }
+    function addBoxItem(id){
+        var attrId=$(`#${id}`);
+        var getValInput=parseInt(attrId.val(),10)+1;
+        attrId.val(getValInput);
+        $(`#weight_${id.split("_")[1]}`).html(getValInput)
+    }
+
+
+
+
+    function templateBox(idx){
+        var html="";
+        for(var i=0;i<idx;i++){
+        html+= '<div class="row wrap_'+i+'">\n' +
+            '                    <div class="col-md-3 mr-2 mt-4 p-0" style="">\n' +
+            '                        <select class="form-control" name="state">\n' +
+            '                            <option value="">Ukuran Box</option>\n' +
+            '                        </select>\n' +
+            '                    </div>\n' +
+            '                    <div class="col-md-3 mt-4 p-0" style="">\n' +
+            '                        <div class="input-group input-custom-group">\n' +
+            '                            <button onclick="minBoxItem(\'item_'+i+'\')" class="btn btn-outline-secondary btn-no-border" type="button"><i class="fa fa-minus"></i></button>\n' +
+            '                            <input readonly value="1" id="item_'+i+'" type="text" class="form-control" placeholder="Qty Box" aria-label="Recipient\'s username" aria-describedby="button-addon2">\n' +
+            '                            <button onclick="addBoxItem(\'item_'+i+'\')" class="btn btn-outline-secondary btn-no-border" type="button"><i class="fa fa-plus"></i></button>\n' +
+            '                        </div>\n' +
+            '                    </div>\n' +
+            '                    <div class="col-md-2 mt-4 wrapper-card-weight">\n' +
+            '                        Box Weight<br/><span style="font-weight: bold"><span id="weight_'+i+'">1</span> Kg</span>\n' +
+            '                    </div>\n' +
+            '                </div>';
+        }
+        $("#container-box").html(html)
+
+
+//        return html;
+
+    }
+
+
+</script>
