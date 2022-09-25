@@ -136,6 +136,7 @@
         }
         button.btn-no-border{
             border: none !important;
+            background-color: transparent !important;
         }
         button.btn-no-border:hover{
             border: none !important;
@@ -164,12 +165,6 @@
             background-color: transparent !important;
             cursor: not-allowed;
         }
-        /**/
-        /*.btn-outline-secondary:not(:disabled):not(.disabled).active, .btn-outline-secondary:not(:disabled):not(.disabled):active, .show>.btn-outline-secondary.dropdown-toggle{*/
-            /*background-color: transparent !important;*/
-            /*color: grey !important;*/
-            /*font-weight: bold;*/
-        /*}*/
         .btn-action-add-destinatoin{
             padding: 15px;
             border-radius: 10px;
@@ -187,6 +182,7 @@
             border-radius: 10px;
             border-color: transparent;
             font-weight: bold;
+            width: 100%;
         }
         .btn-add{
             background-color: #EDF2FF;
@@ -219,6 +215,22 @@
         .select2-results__option--highlighted {
             color: red !important;
         }
+
+        .iconTitle{
+            font-size: 30px;
+            border: 2px solid #EEEEEE;
+            border-radius: 100%;
+            padding:10px;
+            margin-right: 10px
+        }
+        .rowCenter{
+            vertical-align: middle;align-content: center;align-items: center;
+        }
+        .ml-20{margin-left:20px}
+        .pr-20{padding-right: 20px}
+        .mb-20{margin-bottom: 20px}
+        .pembatas{border-style: dashed;border-width: 1px;border-color: #eeeeee;}
+        .container-cancel{float:right;text-align: right;color:orange;cursor: pointer;}
     </style>
 </head>
 <body>
@@ -239,11 +251,11 @@
         </ul>
     </div>
 </nav>
-<hr style="padding-top: 0;margin-top: 0;border-width: 2px">
+<hr style="border-width: 2px">
 <div class="container">
     <div class="row">
         <div class="col-md-3 bold p-0">
-            <i class="fa fa-truck" style="font-size: 30px;border: 2px solid #EEEEEE;border-radius: 100%;padding:10px;margin-right: 10px"></i>
+            <i class="fa fa-truck iconTitle"></i>
             Detail Pemilihan Truck
         </div>
         <div class="col-md-12 p-0 bold mt-4">
@@ -262,11 +274,9 @@
     </div>
 </div>
 <div class="container mt-4 p-0">
-    <hr style="border-style: dashed;border-width: 1px;border-color: #eeeeee">
+    <hr class="pembatas">
 </div>
-<div id="container-destination">
-
-</div>
+<div id="container-destination"></div>
 <div class="container">
     <div class="row">
         <div class="col-md-12 bold p-0">
@@ -282,214 +292,287 @@
 <script>
     var noItems=1;
     var noDestination=1;
+    var dataProvince=[];
+    var dataCity=[];
+    var iMin='<i class="fa fa-minus"></i>';
+    var iAdd='<i class="fa fa-plus"></i>';
 
+    var dataSizeBox=[5,10,15,20,25];
     var dataDest=[
         {
             id:1,
-            detail:[{id:`${noDestination}-${noItems}`,qty:1,size:5}]
+            destination:{id:"",name:"pilih destinasi"},
+            province:{id:'',name:"pilih provinsi"},
+            city:{id:'',name:"pilih kota"},
+            postalCode:"",
+            detail:[{id:`${noDestination}-${noItems}`,qty:1,size:dataSizeBox[0]}]
         }
     ];
+    function getWeeksDiff(startDate, endDate) {
+        const msInWeek = 1000 * 60 * 60 * 24 * 7;
+        return Math.round(Math.abs(endDate - startDate) / msInWeek);
+    }
+
+    function cekUmur(y,m,d,siapa){
+        var tglLahir    = new Date(y,m,d);
+        var tglSekarang = new Date(2022, 09, 25);
+        var rentang     = new Date(tglSekarang.getTime() - tglLahir.getTime());
+        var tahun       = rentang.getUTCFullYear()-1970;
+        var bulan       = rentang.getUTCMonth();
+        var hari        = rentang.getUTCDate()-1;
+        var mingguan    = getWeeksDiff(tglLahir, tglSekarang);
+        console.log(`umur ${siapa} adalah ${tahun} tahun ${bulan} bulan ${hari} hari atau ${mingguan} minggu`);
+    }
+
+    function loadUmur(){
+        console.log("******************* UMUR KELUARGAKU ***********************")
+        cekUmur(1997,04,06,'aba')
+        cekUmur(1998,09,05,'ibu')
+        cekUmur(2022,05,12,'baby I')
+        console.log("***********************************************************")
+    }
 
     $(document).ready(function() {
-        $('#address').select2({
-            placeholder: 'masukkan alamat',
-        });
+        loadUmur()
+        $('#address').select2({placeholder: 'masukkan alamat'});
         setTimeout(function(){
-            templateDestination(1)
-//            templateBox(1);
-            getProvince();
+            getProvince(0);
+            setTimeout(()=>templateDestination(),1000)
         },100)
     });
+
+    function reloadMaster(){
+        dataDest.map((res,i)=>{
+            console.log(res);
+            $(`#destination_${res.destination.id}`).val(res.destination.id)
+            $(`#province_${res.province.id}`).val(res.province.id)
+            $(`#city_${res.city.id}`).val(res.city.id);
+            $(`#postalCode_${i}`).val(res.postalCode);
+            reloadDetail(i,res.detail);
+        })
+    }
+
+    function reloadDetail(i,res){
+        res.map((row,x)=>{
+            $(`#size_${i}_${x}`).val(row.size);
+            $(`#qty_${i}_${x}`).val(row.qty);
+            $(`#weight_${i}_${x}`).html(row.qty);
+        })
+    }
 
     function addDestination(){
         noDestination=noDestination+1;
         dataDest.push({
             id:noDestination,
-            detail:[{
-                id:`${noDestination}-${noItems}`,qty:1,size:5
-            }]
+            destination:{id:"",name:"pilih destinasi"},
+            province:{id:'',name:"pilih provinsi"},
+            city:{id:'',name:"pilih kota"},
+            postalCode:"",
+            detail:[{id:`${noDestination}-${noItems}`,qty:1,size:dataSizeBox[0]}]
         })
         setTimeout(function(){
-            templateDestination(noDestination);
+            templateDestination();
+            reloadMaster();
+            setTimeout(()=>loadCity(dataProvince[0].id,noDestination-1),1000)
+        },100)
+    }
+    function delDestination(dest){
+        noDestination=noDestination-1;
+        const newDataDest = dataDest.filter(res=>res.id!==dataDest[dest].id);
+        dataDest=newDataDest;
+        setTimeout(()=>{
+            templateDestination();
+            reloadMaster()
         },100)
     }
 
 
     function addBox(item,dest){
         noItems = noItems+1;
-        var idxItem=parseInt(item.split("_")[1],10);
-        var idxDest=parseInt(dest.split("_")[1],10);
+        var idxItem=parseInt(item,10);
+        var idxDest=parseInt(dest,10);
         var detail = dataDest[idxDest].detail;
         detail.push({id:`${noDestination}-${noItems}`,qty:1,size:5})
-        setTimeout(function(){
+        setTimeout(()=>{
             templateDestination();
+            reloadDetail(idxDest,detail);
         },100)
     }
     function delBox(item,dest){
         if(noItems>1){
             noItems = noItems-1;
-            var idxItem=parseInt(item.split("_")[1],10);
-            var idxDest=parseInt(dest.split("_")[1],10);
+            var idxItem=parseInt(item,10);
+            var idxDest=parseInt(dest,10);
             var detail = dataDest[idxDest].detail;
-            var newDetail = detail.filter(function(res){
-                return res.id!==detail[idxItem-1].id
-            })
+            var newDetail = detail.filter((res)=>res.id!==detail[idxItem-1].id)
             detail = newDetail;
             dataDest[idxDest].detail = detail;
-            setTimeout(function(){
-                templateDestination()
+            setTimeout(()=>{
+                templateDestination();
+                reloadDetail(idxDest,detail);
             },100)
         }
 
     }
 
 
-    function minBoxItem(id,des){
-        console.log(des)
-        var attrId=$(`#${id}`);
-        var getValInput=parseInt(attrId.val(),10);
-        if(getValInput>1){
-            getValInput=getValInput-1;
-            attrId.val(getValInput);
-            $(`#weight_${id.split("_")[1]}`).html(getValInput)
-        }
-
+    function actionItems(item,dest,act){
+        var qty=dataDest[dest].detail[item].qty;
+        if(act==="-"){
+            if(qty > 1) qty=qty-1
+        }else qty = qty+1;
+        setTimeout(()=>{
+            Object.assign(dataDest[dest].detail[item],{qty:qty});
+            setTimeout(()=>{
+                templateDestination();
+               reloadDetail(dest,dataDest[dest].detail)
+            },100)
+        },100)
     }
-    function addBoxItem(item,dest){
-
-//        var attrId=$(`#${id}`);
-//        var getValInput=parseInt(attrId.val(),10)+1;
-//        attrId.val(getValInput);
-//        $(`#weight_${id.split("_")[1]}`).html(getValInput)
-    }
-
-
-
     function templateDestination(){
         var html="";
-
+        var htmlProvince='<option value="">pilih provinsi</option>';
+        var dataDestination=[{id:1,name:"Toyota Bandung"}];
+        var htmlDestination='<option value="">pilih destinasi</option>';
+        var htmlCity='<option value="">pilih kota</option>';
+        var htmlCancel='';
+        var htmlSizeBox='';
+        for(var i=0;i<dataDestination.length;i++){
+            htmlDestination+='<option value="'+dataDestination[i].id+'">'+dataDestination[i].name.toLowerCase()+'</option>';
+        }
+        for(let i=0;i<dataProvince.length;i++){
+            htmlProvince+='<option value="'+dataProvince[i].id+'">'+dataProvince[i].name.toLowerCase()+'</option>';
+        }
+        for(let i=0;i<dataCity.length;i++){
+            htmlCity+='<option value="'+dataCity[i].id+'">'+dataCity[i].name.toLowerCase()+'</option>';
+        }
+        for(var i=0;i<dataSizeBox.length;i++){
+            htmlSizeBox+='<option value="'+dataSizeBox[i]+'">'+dataSizeBox[i]+'</option>';
+        }
+        
+        
+        
         for(var i=0;i<dataDest.length;i++){
-            console.log(dataDest[i].detail)
-            var isCancel=false;
-            if(i>0){
-                isCancel=true
-            }
-            var htmlCancel='';
-            htmlCancel=isCancel?'<div class="col-md-6" style="float:right;text-align: right;color:orange;cursor: pointer;">cancel destinasi</div>':'';
-            console.log(htmlCancel)
+            var isCancel=i>0;
+            htmlCancel=isCancel?'<div class="col-md-6 container-cancel" onclick="delDestination('+i+')">cancel destinasi</div>':'';
             var htmlItem='';
+            var detail=dataDest[i].detail;
+            var master=dataDest[i];
             for(var x=0;x<dataDest[i].detail.length;x++){
-                htmlItem+= '<div class="row wrap_'+i+'">\n' +
-                    '                    <div class="col-md-3 mr-2 mt-4 p-0" style="">\n' +
-                    '                        <select class="form-control" name="state">\n' +
-                    '                            <option value="">Ukuran Box</option>\n' +
-                    '                        </select>\n' +
-                    '                    </div>\n' +
-                    '                    <div class="col-md-3 mt-4 p-0" style="">\n' +
-                    '                        <div class="input-group input-custom-group" >\n' +
-                    '                            <button onclick="minBoxItem(\'item_'+x+'\',\'dest_'+i+'\')" class="btn btn-outline-secondary btn-no-border" type="button"><i class="fa fa-minus"></i></button>\n' +
-                    '                            <input readonly value="'+dataDest[i].detail[x].qty+'" id="item_'+i+'_'+x+'" type="text" class="form-control" placeholder="Qty Box" aria-label="Recipient\'s username" aria-describedby="button-addon2">\n' +
-                    '                            <button onclick="addBoxItem(\'item_'+x+'\',\'dest_'+i+'\')" class="btn btn-outline-secondary btn-no-border" type="button"><i class="fa fa-plus"></i></button>\n' +
-                    '                        </div>\n' +
-                    '                    </div>\n' +
-                    '                    <div class="col-md-2 mt-4 wrapper-card-weight">\n' +
-                    '                        Box Weight<br/><span style="font-weight: bold"><span id="item_weight_'+i+'_'+x+'">1</span> Kg</span>\n' +
-                    '                    </div>\n' +
-                    '                </div>';
+                var item=detail[x];
+                htmlItem+= '<div class="row wrap_'+i+'">' +
+                    '<div class="col-md-3 mr-2 mt-4 p-0">' +
+                    '   <select class="form-control" id="size_'+i+'_'+x+'" onchange="getSize($(this).val(),'+i+','+x+')">'+htmlSizeBox+'</select>' +
+                    '</div>' +
+                    '<div class="col-md-3 mt-4 p-0">' +
+                    '   <div class="input-group input-custom-group" >' +
+                    '       <button onclick="actionItems('+x+','+i+',`-`)" class="btn-no-border">'+iMin+'</button>' +
+                    '       <input readonly value="'+item.qty+'" id="qty'+i+'_'+x+'" type="text" class="form-control">' +
+                    '       <button onclick="actionItems('+x+','+i+',`+`)" class="btn-no-border">'+iAdd+'</button>' +
+                    '   </div>' +
+                    '</div>' +
+                    '<div class="col-md-2 mt-4 wrapper-card-weight">Box Weight<br/>' +
+                    '   <span class="bold"><span id="weight_'+i+'_'+x+'">1</span> Kg</span>' +
+                    '</div>' +
+                '</div>';
             }
-            html+= '<div class="container">\n' +
-            '        <div class="row">\n' +
-            '            <div class="col-md-12 bold p-0">\n' +
-            '                <div class="row" style="vertical-align: middle;align-content: center;align-items: center">\n' +
-            '                    <div class="col-md-6">\n' +
-            '                        <i class="fa fa-sitemap" style="font-size: 30px;border: 2px solid #EEEEEE;border-radius: 100%;padding:10px;margin-right: 10px"></i>\n' +
-            '                        Pemilihan Destinasi\n' +
-            '                    </div>\n'+
-                    htmlCancel+
-            '                </div>\n' +
-            '            </div>\n' +
-            '            <div class="col-md-4 mt-4 p-0" style="">\n' +
-            '                <select class="form-control" name="state" id="address">\n' +
-            '                </select>\n' +
-            '            </div>\n' +
-            '            <div class="col-md-3 mt-4" style="">\n' +
-            '                <select class="form-control" name="state" id="province" onchange="getCity($(this).val())">\n' +
-            '                </select>\n' +
-            '            </div>\n' +
-            '            <div class="col-md-3 mt-4" style="">\n' +
-            '                <select class="form-control" name="state" id="city">\n' +
-            '                </select>\n' +
-            '            </div>\n' +
-            '            <div class="col-md-2 mt-4 p-0" style="">\n' +
-            '                <input type="text" class="form-control input-custom" placeholder="masukkan kode pos">\n' +
-            '            </div>\n' +
-            '        </div>\n' +
-            '        <div class="container mt-4">\n' +
-            '            <div class="row" style="margin-left: 20px;padding-right: 20px;margin-bottom: 20px">\n' +
-            '                <div class="col-md-12 bold p-0">\n' +
-            '                    <i class="fa fa-cube" style="font-size: 30px;border: 2px solid #EEEEEE;border-radius: 100%;padding:10px;margin-right: 10px"></i>\n' +
-            '                    Pemilihan Box\n' +
-            '                </div>\n' +
-            '                <div class="col-md-12">'+htmlItem+'</div>\n' +
-            '                <div class="col-md-2 mr-3 p-0 mt-4">\n' +
-            '                    <button onclick="addBox(\'item_'+x+'\',\'dest_'+i+'\')" class="btn btn-outline-secondary btn-block btn-action btn-add"><i class="fa fa-plus"></i> TAMBAH BOX</button>\n' +
-            '                </div>\n' +
-            '                <div class="col-md-2 p-0 mt-4">\n' +
-            '                    <button onclick="delBox(\'item_'+x+'\',\'dest_'+i+'\')" class="btn btn-outline-secondary btn-block btn-action btn-del"><i class="fa fa-trash-o"></i> DELETE</button>\n' +
-            '                </div>\n' +
-            '            </div>\n' +
-            '        </div>\n' +
-            '    </div>\n' +
-            '    <div class="container mt-4 p-0">\n' +
-            '        <hr style="border-style: dashed;border-width: 1px;border-color: #eeeeee">\n' +
-            '    </div>'
+            html+= '<div class="container">' +
+            '   <div class="row">' +
+            '       <div class="col-md-12 bold p-0">' +
+            '           <div class="row rowCenter">' +
+            '               <div class="col-md-6">' +
+            '                   <i class="fa fa-sitemap iconTitle"></i> Pemilihan Destinasi' +
+            '               </div>'+htmlCancel+
+            '           </div>' +
+            '       </div>' +
+            '       <div class="col-md-4 mt-4 p-0">' +
+            '           <select class="form-control" id="destination_'+master.destination.id+'" onchange="getDestination($(this).val(),'+i+')">'+htmlDestination+'</select>' +
+            '       </div>' +
+            '       <div class="col-md-3 mt-4">' +
+            '           <select class="form-control" id="province_'+master.province.id+'" onchange="loadCity($(this).val(),'+i+')">' +htmlProvince+'</select>' +
+            '       </div>' +
+            '       <div class="col-md-3 mt-4">' +
+            '           <select class="form-control" id="city_'+master.city.id+'"  onchange="getCity($(this).val(),'+i+')">'+htmlCity+'</select>' +
+            '       </div>' +
+            '       <div class="col-md-2 mt-4 p-0">' +
+            '           <input type="text" id="postalCode_'+i+'" class="input-custom" placeholder="masukkan kode pos" onchange="getPostalCode($(this).val(),'+i+')">' +
+            '       </div>' +
+            '   </div>' +
+            '   <div class="container mt-4">' +
+            '       <div class="row ml-20 pr-20 mb-20">' +
+            '           <div class="col-md-12 bold p-0">' +
+            '               <i class="fa fa-cube iconTitle"></i> Pemilihan Box' +
+            '           </div>' +
+            '           <div class="col-md-12">'+htmlItem+'</div>' +
+            '               <div class="col-md-2 mr-3 p-0 mt-4">' +
+            '                    <button onclick="addBox('+x+','+i+')" class="btn btn-action btn-add">'+iAdd+' TAMBAH BOX</button>' +
+            '               </div>' +
+            '               <div class="col-md-2 p-0 mt-4">' +
+            '                    <button onclick="delBox('+x+','+i+')" class="btn btn-action btn-del"><i class="fa fa-trash-o"></i> DELETE</button>' +
+            '               </div>' +
+            '           </div>' +
+            '       </div>' +
+            '   </div>' +
+            '   <div class="container mt-4 p-0"><hr class="pembatas"></div>'
         }
 
-        $("#container-destination").html(html)
-
+        $("#container-destination").html(html);
     }
 
 
+    var baseUrl='http://www.emsifa.com/api-wilayah-indonesia/api/';
 
-
-    function getProvince(){
+    function getProvince(idxDest){
         $.ajax({
-            url:"http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json",
+            url:`${baseUrl}provinces.json`,
             dataType:"JSON",
             type:"GET",
             success:function(res){
-                var html="<option>pilih provinsi</option>";
-                for(var i=0;i<res.length;i++){
-                    html+='<option value="'+res[i].id+'" style="color: grey;">'+res[i].name+'</option>';
-                }
-                setTimeout(function(){
-                    $("#province").html(html)
-                },100)
+                // Object.assign(dataDest[idxDest],{city:{id:res[0].id,name:res[0].name}})
+                dataProvince=res;
+                loadCity(res[0].id,0);
             }
         });
     }
-    function getCity(provinceId){
-        dataCity = [];
+    function getPostalCode(code,dest){
+        console.log(code)
+        Object.assign(dataDest[dest],{postalCode:code})
+    }
+    function getSize(size,dest,item){
+        Object.assign(dataDest[dest].detail[item],{size:size})
+    }
+    function getCity(cityId,dest){
+        var newDataDest= dataDest[dest];
+        var cityName=$(`#city_${newDataDest.city.id} option:selected`).text();
+        Object.assign(dataDest[dest],{city:{id:cityId,name:cityName}})
+    }
+    function getDestination(destId,dest){
+        var newDataDest= dataDest[dest];
+        var destName=$(`#destination_${newDataDest.destination.id} option:selected`).text();
+        Object.assign(dataDest[dest],{destination:{id:destId,name:destName}})
+    }
+    
+    function loadCity(provinceId,dest){
+        var newDataDest= dataDest[dest];
+        var provinceName=$(`#province_${newDataDest.province.id} option:selected`).text();
+        Object.assign(dataDest[dest],{province:{id:provinceId,name:provinceName}})
+        var html="<option>pilih kota</option>";
         $.ajax({
-            url:`http://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinceId}.json`,
+            url:`${baseUrl}regencies/${provinceId}.json`,
             dataType:"JSON",
             type:"GET",
             success:function(res){
-                var html="<option>pilih kota</option>";
+                dataCity=res;
                 for(var i=0;i<res.length;i++){
-                    html+='<option value="'+res[i].id+'" style="color: grey;">'+res[i].name+'</option>';
+                    html+='<option value="'+res[i].id+'">'+res[i].name.toLowerCase()+'</option>';
                 }
-
-                setTimeout(function(){
-                    $("#city").html(html)
+                 setTimeout(function(){
+                    $(`#city_${newDataDest.city.id}`).html(html)
                 },100)
-
-            },
-            error: function (xhr, status) {
-                alert("error");
-
             }
         });
+       
+        
 
     }
 
