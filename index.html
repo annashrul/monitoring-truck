@@ -170,7 +170,18 @@
             /*color: grey !important;*/
             /*font-weight: bold;*/
         /*}*/
-
+        .btn-action-add-destinatoin{
+            padding: 15px;
+            border-radius: 10px;
+            border-color: transparent;
+            font-weight: bold;
+            background-color: black;
+            color: white;
+        }
+        .btn-action-add-destinatoin:hover{
+            background-color: black;
+            color: white;
+        }
         .btn-action{
             padding: 15px;
             border-radius: 10px;
@@ -196,10 +207,18 @@
             border-color: #F7941E;
 
         }
+        .select2-container--default .select2-results__option--selected {
+            background-color: #ddd !important;
+            color: red !important;
+        }
+        .select2-results__option {
+            color: grey;
+            font-weight: bold !important;
+        }
 
-
-
-
+        .select2-results__option--highlighted {
+            color: red !important;
+        }
     </style>
 </head>
 <body>
@@ -245,46 +264,13 @@
 <div class="container mt-4 p-0">
     <hr style="border-style: dashed;border-width: 1px;border-color: #eeeeee">
 </div>
+<div id="container-destination">
+
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-12 bold p-0">
-            <i class="fa fa-sitemap" style="font-size: 30px;border: 2px solid #EEEEEE;border-radius: 100%;padding:10px;margin-right: 10px"></i>
-            Pemilihan Destinasi
-        </div>
-        <div class="col-md-4 mt-4 p-0" style="">
-            <select class="js-example-basic-single" name="state" id="address">
-                <option value="">Pilih destinasi</option>
-            </select>
-        </div>
-        <div class="col-md-3 mt-4 p-0" style="">
-            <select class="js-example-basic-single" name="state" id="province">
-                <option value="">Pilih destinasi</option>
-            </select>
-        </div>
-        <div class="col-md-3 mt-4 p-0" style="">
-            <select class="js-example-basic-single" name="state" id="city">
-                <option value="">Pilih destinasi</option>
-            </select>
-        </div>
-        <div class="col-md-2 mt-4 p-0" style="">
-            <input type="text" class="form-control input-custom" placeholder="masukkan kode pos">
-        </div>
-
-    </div>
-    <div class="container mt-4">
-        <div class="row" style="margin-left: 20px;padding-right: 20px;margin-bottom: 20px">
-            <div class="col-md-12 bold p-0">
-                <i class="fa fa-cube" style="font-size: 30px;border: 2px solid #EEEEEE;border-radius: 100%;padding:10px;margin-right: 10px"></i>
-                Pemilihan Box
-            </div>
-            <div class="col-md-12" id="container-box"></div>
-
-            <div class="col-md-2 mr-3 p-0 mt-4">
-                <button onclick="addBox('item_1')" class="btn btn-outline-secondary btn-block btn-action btn-add"><i class="fa fa-plus"></i> TAMBAH BOX</button>
-            </div>
-            <div class="col-md-2 p-0 mt-4">
-                <button onclick="delBox()" class="btn btn-outline-secondary btn-block btn-action btn-del"><i class="fa fa-trash-o"></i> DELETE</button>
-            </div>
+            <button onclick="addDestination()" class="btn btn-outline-secondary btn-action-add-destinatoin"><i class="fa fa-plus"></i> TAMBAH DESTINASI</button>
         </div>
     </div>
 </div>
@@ -294,66 +280,72 @@
 </html>
 
 <script>
-    // In your Javascript (external.js resource or <script> tag)
+    var noItems=1;
+    var noDestination=1;
+
+    var dataDest=[
+        {
+            id:1,
+            detail:[{id:`${noDestination}-${noItems}`,qty:1,size:5}]
+        }
+    ];
+
     $(document).ready(function() {
-        var dataAddress = [{
-            id: 0,
-            text: '<div style="color:red"><i class="fa fa-map-marker"></i> <b>Toyota Bandung</b></div><div style="color: grey">Jl. A. Yani No.336-338, Cicadas</div>',
-            title: 'toyota-bandung'
-        }];
-        var dataProvince = [{
-            id: 0,
-            text: '<div style="color:red"><i class="fa fa-map-marker"></i> <b>Jawabarat</b></div><div style="color: grey">-</div>',
-            title: 'toyota-bandung'
-        }];
-        var dataCity = [{
-            id: 0,
-            text: '<div style="color:red"><i class="fa fa-map-marker"></i> <b>Bandung</b></div><div style="color: grey">-</div>',
-            title: 'toyota-bandung'
-        }];
         $('#address').select2({
             placeholder: 'masukkan alamat',
-            data: dataAddress,
-            escapeMarkup: function(markup) {
-                return markup;
-            }
         });
-        $('#province').select2({
-            placeholder: 'masukkan provinsi',
-            data: dataProvince,
-            escapeMarkup: function(markup) {
-                return markup;
-            }
-        });
-        $('#city').select2({
-            placeholder: 'masukkan kota',
-            data: dataCity,
-            escapeMarkup: function(markup) {
-                return markup;
-            }
-        });
-        templateBox(1);
+        setTimeout(function(){
+            templateDestination(1)
+//            templateBox(1);
+            getProvince();
+        },100)
     });
 
-    var no=1;
-    function addBox(){
-        no = no+1;
+    function addDestination(){
+        noDestination=noDestination+1;
+        dataDest.push({
+            id:noDestination,
+            detail:[{
+                id:`${noDestination}-${noItems}`,qty:1,size:5
+            }]
+        })
         setTimeout(function(){
-            templateBox(no);
+            templateDestination(noDestination);
         },100)
     }
-    function delBox(){
-        if(no>1){
-            no = no-1;
+
+
+    function addBox(item,dest){
+        noItems = noItems+1;
+        var idxItem=parseInt(item.split("_")[1],10);
+        var idxDest=parseInt(dest.split("_")[1],10);
+        var detail = dataDest[idxDest].detail;
+        detail.push({id:`${noDestination}-${noItems}`,qty:1,size:5})
+        setTimeout(function(){
+            templateDestination();
+        },100)
+    }
+    function delBox(item,dest){
+        if(noItems>1){
+            noItems = noItems-1;
+            var idxItem=parseInt(item.split("_")[1],10);
+            var idxDest=parseInt(dest.split("_")[1],10);
+            var detail = dataDest[idxDest].detail;
+            var newDetail = detail.filter(function(res){
+                return res.id!==detail[idxItem-1].id
+            })
+            detail = newDetail;
+            dataDest[idxDest].detail = detail;
             setTimeout(function(){
-                templateBox(no);
+                templateDestination()
             },100)
         }
 
     }
 
 
-    function minBoxItem(id){
+    function minBoxItem(id,des){
+        console.log(des)
         var attrId=$(`#${id}`);
         var getValInput=parseInt(attrId.val(),10);
         if(getValInput>1){
@@ -363,41 +355,141 @@
         }
 
     }
-    function addBoxItem(id){
-        var attrId=$(`#${id}`);
-        var getValInput=parseInt(attrId.val(),10)+1;
-        attrId.val(getValInput);
-        $(`#weight_${id.split("_")[1]}`).html(getValInput)
+    function addBoxItem(item,dest){
+
+//        var attrId=$(`#${id}`);
+//        var getValInput=parseInt(attrId.val(),10)+1;
+//        attrId.val(getValInput);
+//        $(`#weight_${id.split("_")[1]}`).html(getValInput)
+    }
+
+
+
+    function templateDestination(){
+        var html="";
+
+        for(var i=0;i<dataDest.length;i++){
+            console.log(dataDest[i].detail)
+            var isCancel=false;
+            if(i>0){
+                isCancel=true
+            }
+            var htmlCancel='';
+            htmlCancel=isCancel?'<div class="col-md-6" style="float:right;text-align: right;color:orange;cursor: pointer;">cancel destinasi</div>':'';
+            console.log(htmlCancel)
+            var htmlItem='';
+            for(var x=0;x<dataDest[i].detail.length;x++){
+                htmlItem+= '<div class="row wrap_'+i+'">\n' +
+                    '                    <div class="col-md-3 mr-2 mt-4 p-0" style="">\n' +
+                    '                        <select class="form-control" name="state">\n' +
+                    '                            <option value="">Ukuran Box</option>\n' +
+                    '                        </select>\n' +
+                    '                    </div>\n' +
+                    '                    <div class="col-md-3 mt-4 p-0" style="">\n' +
+                    '                        <div class="input-group input-custom-group" >\n' +
+                    '                            <button onclick="minBoxItem(\'item_'+x+'\',\'dest_'+i+'\')" class="btn btn-outline-secondary btn-no-border" type="button"><i class="fa fa-minus"></i></button>\n' +
+                    '                            <input readonly value="'+dataDest[i].detail[x].qty+'" id="item_'+i+'_'+x+'" type="text" class="form-control" placeholder="Qty Box" aria-label="Recipient\'s username" aria-describedby="button-addon2">\n' +
+                    '                            <button onclick="addBoxItem(\'item_'+x+'\',\'dest_'+i+'\')" class="btn btn-outline-secondary btn-no-border" type="button"><i class="fa fa-plus"></i></button>\n' +
+                    '                        </div>\n' +
+                    '                    </div>\n' +
+                    '                    <div class="col-md-2 mt-4 wrapper-card-weight">\n' +
+                    '                        Box Weight<br/><span style="font-weight: bold"><span id="item_weight_'+i+'_'+x+'">1</span> Kg</span>\n' +
+                    '                    </div>\n' +
+                    '                </div>';
+            }
+            html+= '<div class="container">\n' +
+            '        <div class="row">\n' +
+            '            <div class="col-md-12 bold p-0">\n' +
+            '                <div class="row" style="vertical-align: middle;align-content: center;align-items: center">\n' +
+            '                    <div class="col-md-6">\n' +
+            '                        <i class="fa fa-sitemap" style="font-size: 30px;border: 2px solid #EEEEEE;border-radius: 100%;padding:10px;margin-right: 10px"></i>\n' +
+            '                        Pemilihan Destinasi\n' +
+            '                    </div>\n'+
+                    htmlCancel+
+            '                </div>\n' +
+            '            </div>\n' +
+            '            <div class="col-md-4 mt-4 p-0" style="">\n' +
+            '                <select class="form-control" name="state" id="address">\n' +
+            '                </select>\n' +
+            '            </div>\n' +
+            '            <div class="col-md-3 mt-4" style="">\n' +
+            '                <select class="form-control" name="state" id="province" onchange="getCity($(this).val())">\n' +
+            '                </select>\n' +
+            '            </div>\n' +
+            '            <div class="col-md-3 mt-4" style="">\n' +
+            '                <select class="form-control" name="state" id="city">\n' +
+            '                </select>\n' +
+            '            </div>\n' +
+            '            <div class="col-md-2 mt-4 p-0" style="">\n' +
+            '                <input type="text" class="form-control input-custom" placeholder="masukkan kode pos">\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '        <div class="container mt-4">\n' +
+            '            <div class="row" style="margin-left: 20px;padding-right: 20px;margin-bottom: 20px">\n' +
+            '                <div class="col-md-12 bold p-0">\n' +
+            '                    <i class="fa fa-cube" style="font-size: 30px;border: 2px solid #EEEEEE;border-radius: 100%;padding:10px;margin-right: 10px"></i>\n' +
+            '                    Pemilihan Box\n' +
+            '                </div>\n' +
+            '                <div class="col-md-12">'+htmlItem+'</div>\n' +
+            '                <div class="col-md-2 mr-3 p-0 mt-4">\n' +
+            '                    <button onclick="addBox(\'item_'+x+'\',\'dest_'+i+'\')" class="btn btn-outline-secondary btn-block btn-action btn-add"><i class="fa fa-plus"></i> TAMBAH BOX</button>\n' +
+            '                </div>\n' +
+            '                <div class="col-md-2 p-0 mt-4">\n' +
+            '                    <button onclick="delBox(\'item_'+x+'\',\'dest_'+i+'\')" class="btn btn-outline-secondary btn-block btn-action btn-del"><i class="fa fa-trash-o"></i> DELETE</button>\n' +
+            '                </div>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '    <div class="container mt-4 p-0">\n' +
+            '        <hr style="border-style: dashed;border-width: 1px;border-color: #eeeeee">\n' +
+            '    </div>'
+        }
+
+        $("#container-destination").html(html)
+
     }
 
 
 
 
-    function templateBox(idx){
-        var html="";
-        for(var i=0;i<idx;i++){
-        html+= '<div class="row wrap_'+i+'">\n' +
-            '                    <div class="col-md-3 mr-2 mt-4 p-0" style="">\n' +
-            '                        <select class="form-control" name="state">\n' +
-            '                            <option value="">Ukuran Box</option>\n' +
-            '                        </select>\n' +
-            '                    </div>\n' +
-            '                    <div class="col-md-3 mt-4 p-0" style="">\n' +
-            '                        <div class="input-group input-custom-group">\n' +
-            '                            <button onclick="minBoxItem(\'item_'+i+'\')" class="btn btn-outline-secondary btn-no-border" type="button"><i class="fa fa-minus"></i></button>\n' +
-            '                            <input readonly value="1" id="item_'+i+'" type="text" class="form-control" placeholder="Qty Box" aria-label="Recipient\'s username" aria-describedby="button-addon2">\n' +
-            '                            <button onclick="addBoxItem(\'item_'+i+'\')" class="btn btn-outline-secondary btn-no-border" type="button"><i class="fa fa-plus"></i></button>\n' +
-            '                        </div>\n' +
-            '                    </div>\n' +
-            '                    <div class="col-md-2 mt-4 wrapper-card-weight">\n' +
-            '                        Box Weight<br/><span style="font-weight: bold"><span id="weight_'+i+'">1</span> Kg</span>\n' +
-            '                    </div>\n' +
-            '                </div>';
-        }
-        $("#container-box").html(html)
+    function getProvince(){
+        $.ajax({
+            url:"http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json",
+            dataType:"JSON",
+            type:"GET",
+            success:function(res){
+                var html="<option>pilih provinsi</option>";
+                for(var i=0;i<res.length;i++){
+                    html+='<option value="'+res[i].id+'" style="color: grey;">'+res[i].name+'</option>';
+                }
+                setTimeout(function(){
+                    $("#province").html(html)
+                },100)
+            }
+        });
+    }
+    function getCity(provinceId){
+        dataCity = [];
+        $.ajax({
+            url:`http://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinceId}.json`,
+            dataType:"JSON",
+            type:"GET",
+            success:function(res){
+                var html="<option>pilih kota</option>";
+                for(var i=0;i<res.length;i++){
+                    html+='<option value="'+res[i].id+'" style="color: grey;">'+res[i].name+'</option>';
+                }
 
+                setTimeout(function(){
+                    $("#city").html(html)
+                },100)
 
-//        return html;
+            },
+            error: function (xhr, status) {
+                alert("error");
+
+            }
+        });
 
     }
 
