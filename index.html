@@ -151,6 +151,7 @@
             font-weight: bold;
             box-shadow:none !important;
         }
+        
         .wrapper-card-weight{
             margin-left: 10px;
             border:2px solid #EEEEEE;
@@ -231,6 +232,103 @@
         .mb-20{margin-bottom: 20px}
         .pembatas{border-style: dashed;border-width: 1px;border-color: #eeeeee;}
         .container-cancel{float:right;text-align: right;color:orange;cursor: pointer;}
+        .btn-href{
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .btn-next, .btn-next:hover{
+            color:white;
+            background-color: black;
+            border-color: black;
+        }
+        
+        .btn-prev,.btn-prev:hover{
+            color:black;
+            border-color: black;
+            background-color: white;
+        }
+
+        .wrapper-card-page-2{
+            border:1px solid blue;
+            padding:20px;
+            border-radius:10px;
+        }
+        .card-blue{
+            background-color: #F5F8FF;
+        }
+        .txt-end{text-align: end;}
+        .card-active{
+            border:2px solid red;
+        }
+        section.content {
+            /*max-width: 1200px;*/
+            /*margin-left: auto;*/
+            /*margin-right: auto;*/
+            height: 100%;
+            /*background-color: lightblue;*/
+            /*padding: 0px;*/
+        }
+        section.content::after {
+            clear: both;
+            content: "";
+            display: block;
+        }
+
+        .sheets {
+            text-align: center;
+            float: left;
+            display: block;
+            /*padding-right: 10px;*/
+            /*margin-right: 2.3576520234%;*/
+            width: 100%;
+            margin-top: 10px;
+            height: 50px;
+            background-color: white;
+        }
+        .sheets:last-child {
+            margin-right: 0;
+        }
+        .sheets:nth-child(4n) {
+            margin-right: 0;
+        }
+        .sheets:nth-child(4n+1) {
+            clear: left;
+        }
+
+        .standard {
+            box-shadow: 1px 1px 0 rgba(26, 26, 26, 0.3), 3px 3px 0 white, 4px 4px 0 rgba(26, 26, 26, 0.325), 6px 6px 0 white, 7px 7px 0 rgba(26, 26, 26, 0.35), 9px 9px 0 white, 10px 10px 0 rgba(26, 26, 26, 0.375);
+        }
+
+        .few {
+            box-shadow: 1px 1px 0 rgba(26, 26, 26, 0.3), 3px 3px 0 white, 4px 4px 0 rgba(26, 26, 26, 0.325);
+        }
+
+
+
+        .many {
+            box-shadow: 1px 1px 0 red, 3px 3px 0 white, 4px 4px 0 yellow, 6px 6px 0 white, 7px 7px 0 green, 9px 9px 0 white, 10px 10px 0 black, 12px 12px 0 white, 13px 13px 0 rgba(26, 26, 26, 0.4), 15px 15px 0 white, 16px 16px 0 rgba(26, 26, 26, 0.425), 18px 18px 0 white, 19px 19px 0 rgba(26, 26, 26, 0.45);
+        }
+
+        .left-short-red {
+            box-shadow: -1px 1px 0 rgba(0, 0, 0, 0.3), -2px 2px 0 red, -3px 3px 0 rgba(0, 0, 0, 0.325), -4px 4px 0 red, -5px 5px 0 rgba(0, 0, 0, 0.35), -6px 6px 0 red, -7px 7px 0 rgba(0, 0, 0, 0.375);
+        }
+
+        .left-red {
+            box-shadow: -1px 1px 0 blue, -3px 3px 0 red, -4px 4px 0 yellow, -6px 6px 0 red, -7px 7px 0 green, -9px 9px 0 red, -10px 10px 0 purple;
+        }
+
+        .long-left {
+            box-shadow: -1px 1px 0 red, -3px 3px 0 red, -4px 4px 0 black, -6px 6px 0 black, -7px 7px 0 green, -9px 9px 0 green, -10px 10px 0 green;
+        }
+        .left {
+            box-shadow: -1px 1px 0 white, -3px 3px 0 black, -4px 4px 0 white, -6px 6px 0 red, -7px 7px 0 white, -9px 9px 0 blue;
+        }
+        .short {
+            box-shadow: 1px 1px 0 rgba(26, 26, 26, 0.3), 2px 2px 0 white, 3px 3px 0 rgba(26, 26, 26, 0.325), 4px 4px 0 white, 5px 5px 0 rgba(26, 26, 26, 0.35), 6px 6px 0 white, 7px 7px 0 rgba(26, 26, 26, 0.375);
+        }
     </style>
 </head>
 <body>
@@ -246,46 +344,302 @@
         <ul class="navbar-nav">
             <li class="nav-item active" style="text-align: right">
                 <a class="nav-link bold" href="#">Delivery Truck</a>
-                <a class="nav-link" href="#">Sunday, 09-16-2022 07:11 AM</a>
+                <a class="nav-link" href="#" id="clock">Sunday, 09-16-2022 07:11 AM</a>
             </li>
         </ul>
     </div>
 </nav>
 <hr style="border-width: 2px">
-<div class="container">
+<div class="container" style="margin-bottom: 50px">
     <div class="row">
-        <div class="col-md-3 bold p-0">
-            <i class="fa fa-truck iconTitle"></i>
-            Detail Pemilihan Truck
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="long-left sheets">1</div>
+            </section>
         </div>
-        <div class="col-md-12 p-0 bold mt-4">
-            Pilih Jenis Truck
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">2</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">3</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">4</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">5</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">6</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">7</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">8</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">9</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">10</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">11</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">12</div>
+            </section>
         </div>
 
-        <div class="col-md-2 mt-4 wrapper-card">
-            Truck Size S
+
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="long-left sheets">1</div>
+            </section>
         </div>
-        <div class="col-md-2 mt-4 wrapper-card">
-            Truck Size M
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">2</div>
+            </section>
         </div>
-        <div class="col-md-2 mt-4 wrapper-card">
-            Truck Size L
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">3</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">4</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">5</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">6</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">7</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">8</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">9</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">10</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">11</div>
+            </section>
+        </div>
+
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">12</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="long-left sheets">1</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">2</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">3</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">4</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">5</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">6</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">7</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">8</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">9</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">10</div>
+            </section>
+        </div>
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">11</div>
+            </section>
+        </div>
+
+        <div class="col-md-1 p-0">
+            <section class="content">
+                <div class="left sheets">12</div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div id="wrapper-page-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 bold p-0">
+                <i class="fa fa-truck iconTitle"></i>
+                Detail Pemilihan Truck
+            </div>
+            <div class="col-md-12 p-0 bold mt-4">
+                Pilih Jenis Truck
+            </div>
+            <div class="col-md-12">
+                <div class="row" id="result-type"></div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="container mt-4 p-0"><hr class="pembatas"></div>
+    <div id="container-destination"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 bold p-0">
+                <button onclick="addDestination()" class="btn btn-outline-secondary btn-action-add-destinatoin"><i class="fa fa-plus"></i> TAMBAH DESTINASI</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="wrapper-page-2" style="display:none">
+    <div class="container">
+        <div class="row justify-content-between wrapper-card-page-2">
+            <div class="col-md-6 p-0">
+                <div class="row">
+                    <div class="col-md-6">Date</div>
+                    <div class="col-md-6">:</div>
+                </div>
+            </div>
+            <div class="col-md-6 p-0 txt-end" id="datePage2"></div>
+            <hr>
+            <div class="col-md-6 p-0">
+                <div class="row">
+                    <div class="col-md-6">Time</div>
+                    <div class="col-md-6">:</div>
+                </div>
+            </div>
+            <div class="col-md-6 p-0 txt-end" id="timePage2"></div>
+        </div>
+    </div>
+    <div class="container mt-4 p-0">
+        <hr class="pembatas">
+    </div>
+    <div class="container">
+        <div class="row justify-content-between wrapper-card-page-2 card-blue">
+            <div class="col-md-12 p-0 bold">Jenis Truck</div>
+            <hr/>
+            <div class="col-md-6 p-0">
+                <div class="row">
+                    <div class="col-md-6">Date</div>
+                    <div class="col-md-6">:</div>
+                </div>
+            </div>
+            <div class="col-md-6 p-0 txt-end" id="dateTypePage2"></div>
+            <hr>
+            <div class="col-md-6 p-0">
+                <div class="row">
+                    <div class="col-md-6">Size Truck</div>
+                    <div class="col-md-6">:</div>
+                </div>
+            </div>
+            <div class="col-md-6 p-0 txt-end">Size <span id="sizeTypePage2"></span></div>
+            <hr>
+            <div class="col-md-6 p-0">
+                <div class="row">
+                    <div class="col-md-6">Dimensi Truck</div>
+                    <div class="col-md-6">:</div>
+                </div>
+            </div>
+            <div class="col-md-6 p-0 txt-end"><span id="dimenTypePage2"></span> Kg</div>
+        </div>
+    </div>
+    <div class="container mt-4 p-0">
+        <hr class="pembatas">
+    </div>
+     <div class="container">
+        <div class="row justify-content-between wrapper-card-page-2 card-blue">
+            <div class="col-md-12 p-0 bold">Destinasi</div>
+            <hr/>
+            <div class="col-md-12" id="result-destination">
+
+            </div>
         </div>
     </div>
 </div>
 <div class="container mt-4 p-0">
     <hr class="pembatas">
 </div>
-<div id="container-destination"></div>
 <div class="container">
-    <div class="row">
-        <div class="col-md-12 bold p-0">
-            <button onclick="addDestination()" class="btn btn-outline-secondary btn-action-add-destinatoin"><i class="fa fa-plus"></i> TAMBAH DESTINASI</button>
-        </div>
+    <div class="row justify-content-end">
+        <button class="btn btn-outline-secondary btn-href btn-prev" onclick="handlePrev()"> KEMBALI</button>
+        <button class="btn btn-outline-secondary btn-href btn-next" onclick="handleNext()"> LANJUT</button>
     </div>
 </div>
-
-
 </body>
 </html>
 
@@ -296,62 +650,194 @@
     var dataCity=[];
     var iMin='<i class="fa fa-minus"></i>';
     var iAdd='<i class="fa fa-plus"></i>';
-
-    var dataSizeBox=[5,10,15,20,25];
+    var page=1;
+    var md6="col-md-6";
+    var md12="col-md-12";
+    var dataSizeBox=['S','M','L'];
+    var dataType=['S','M','L'];
+    var idxType=0;
     var dataDest=[
         {
             id:1,
+            type:dataType[0],
             destination:{id:"",name:"pilih destinasi"},
-            province:{id:'',name:"pilih provinsi"},
+            province:{id:'',name:"pilih provinsi",data:[]},
             city:{id:'',name:"pilih kota"},
             postalCode:"",
-            detail:[{id:`${noDestination}-${noItems}`,qty:1,size:dataSizeBox[0]}]
+            detail:[{id:`${noDestination}-${noItems}`,qty:1,size:dataSizeBox[0],weight:1}]
         }
     ];
-    function getWeeksDiff(startDate, endDate) {
-        const msInWeek = 1000 * 60 * 60 * 24 * 7;
-        return Math.round(Math.abs(endDate - startDate) / msInWeek);
+
+    var resultDestination=[];
+
+    function getClock(){
+        var daysName = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        let today = new Date();
+        let year = today.getFullYear();
+        let month = today.getMonth() + 1;
+        let day = today.getDate();
+        let hour = today.getHours();
+        let min = today.getMinutes();
+        let sec = today.getSeconds();
+        am_pm = "AM";
+        if (hour > 12) {
+            hour -= 12;
+            am_pm = "PM";
+        }
+        if (hour === 0) {
+            hour = 12;
+            am_pm = "AM";
+        }
+
+        hour = hour < 10 ? "0" + hour : hour;
+        min = min < 10 ? "0" + min : min;
+        sec = sec < 10 ? "0" + sec : sec;
+        month = month < 10 ? "0" + month : month;
+        day = day < 10 ? "0" + day : day;
+        let currentDate = [day,month,year].join("-");
+        let currentTime = hour + ":"+ min + ":" + sec + " " + am_pm;
+        return {dayName:daysName[today.getDay()],currentDate,currentTime:currentTime};
     }
 
-    function cekUmur(y,m,d,siapa){
-        var tglLahir    = new Date(y,m,d);
-        var tglSekarang = new Date(2022, 09, 25);
-        var rentang     = new Date(tglSekarang.getTime() - tglLahir.getTime());
-        var tahun       = rentang.getUTCFullYear()-1970;
-        var bulan       = rentang.getUTCMonth();
-        var hari        = rentang.getUTCDate()-1;
-        var mingguan    = getWeeksDiff(tglLahir, tglSekarang);
-        console.log(`umur ${siapa} adalah ${tahun} tahun ${bulan} bulan ${hari} hari atau ${mingguan} minggu`);
-    }
+    window.onload = setInterval(function() {
+        const dataClock = getClock();
+        document.getElementById("clock").innerHTML = dataClock.dayName+", "+dataClock.currentDate + " " + dataClock.currentTime;
+    }, 1000);
 
-    function loadUmur(){
-        console.log("******************* UMUR KELUARGAKU ***********************")
-        cekUmur(1997,04,06,'aba')
-        cekUmur(1998,09,05,'ibu')
-        cekUmur(2022,05,12,'baby I')
-        console.log("***********************************************************")
-    }
+
+
 
     $(document).ready(function() {
-        loadUmur()
-        $('#address').select2({placeholder: 'masukkan alamat'});
-        setTimeout(function(){
-            getProvince(0);
-            setTimeout(()=>templateDestination(),1000)
-        },100)
-    });
+        getProvince(0);
 
-    function reloadMaster(){
-        dataDest.map((res,i)=>{
-            console.log(res);
-            $(`#destination_${res.destination.id}`).val(res.destination.id)
-            $(`#province_${res.province.id}`).val(res.province.id)
-            $(`#city_${res.city.id}`).val(res.city.id);
-            $(`#postalCode_${i}`).val(res.postalCode);
-            reloadDetail(i,res.detail);
-        })
+//        var htmlType="";
+//        for(var i=0;i<dataType.length;i++){
+//            htmlType+='<div class="col-md-2 mt-4 wrapper-card" id="card-type-'+i+'" onclick="setType('+i+')">Truck Size '+dataType[i]+'</div>'
+//        }
+//
+//        $("#result-type").html(htmlType)
+//        templateResultDestination();
+//        $('#address').select2({placeholder: 'masukkan alamat'});
+        setTimeout(function(){
+            setType(0);
+            Object.assign(dataDest[0].province,{data:dataProvince})
+           setTimeout(()=>{
+               templateDestination()
+           },1000)
+//            templateDestination()
+//            console.log("data province",dataProvince)
+
+
+        },100);
+        checkPage(localStorage.page===undefined || localStorage.page==="1")
+    });
+    function setType(i){
+        Object.assign(dataDest[0],{type:dataType[i]});
+        let isTrue=false;
+        $(".wrapper-card").removeClass("card-active");
+        for(let x=0; x<dataType.length; x++){
+            if(dataType[x]===dataType[i]){
+                isTrue=true;
+                break;
+            }else{
+                isTrue=false;
+            }
+        }
+        if(isTrue){
+            $(`#card-type-${i}`).addClass("card-active");
+        }else{
+            $("#card-type-${i}").removeClass("card-active")
+        }
     }
 
+
+    function checkPage(isPage1){
+        $("#wrapper-page-1").css({"display":isPage1?"block":"none"});
+        $("#wrapper-page-2").css({"display":isPage1?"none":"block"});
+        if(!isPage1){
+            const dataClock = getClock();
+            const datePage2=dataClock.currentDate.replaceAll("-","/");
+
+            $("#datePage2").html(datePage2);
+            $("#timePage2").html(dataClock.currentTime);
+            $("#dateTypePage2").html(datePage2);
+            $("#sizeTypePage2").html(dataType[idxType]);
+            $("#dimenTypePage2").html("10");
+            let newDataDest=[];
+            for(let i=0;i<dataDest.length;i++){
+                newDataDest.push(
+                    {
+                        destination:`${dataDest[i].destination.name}, ${dataDest[i].city.name} ${dataDest[i].province.name} ${dataDest[i].postalCode}`,
+                        size:"S",
+                        weight:10,
+                        qty:10
+                    },
+                )
+            }
+            resultDestination=newDataDest;
+            setTimeout(()=>{
+                templateResultDestination()
+            },100);
+            console.log("page 2",dataDest);
+        }
+
+    }
+
+    function handleNext(){
+        console.log(dataDest)
+        for(let i=0;i<dataDest.length;i++){
+            if(dataDest[i].destination.id===""){
+                alert("destinasi tidak boleh kosong");
+                $(`#destination_${dataDest[i].destination.id}`).focus()
+                return;
+            }
+            if(dataDest[i].province.id===""){
+                alert("provinsi tidak boleh kosong");
+                $(`#province_${i}`).focus()
+                return;
+            }
+            if(dataDest[i].city.id===""){
+                alert("kota tidak boleh kosong");
+                $(`#city_${i}`).focus()
+                return;
+            }
+            if(dataDest[i].postalCode===""){
+                alert("kode pos tidak boleh kosong");
+                $(`#postalCode_${i}`).focus()
+                return;
+            }
+        }
+        localStorage.setItem("page","2");
+        setTimeout(()=>checkPage(false),100);
+
+    }
+    function handlePrev(){
+        localStorage.setItem("page","1");
+        checkPage(true)
+    }
+    function reloadMaster(){
+//        for(let i=0;i<dataDest.length;i++){
+//            let res=dataDest[i];
+//            let prov=res.province.id;
+//            if(prov===""){
+//                prov=dataProvince[0].id;
+//            }
+//            $(`#province_${i}`).val(prov);
+//        }
+//        dataDest.map((res,i)=>{
+//            console.log(res);
+//            let prov=res.province.id;
+//            if(prov===""){
+//                prov=dataProvince[0].id;
+//            }
+//            console.log(prov)
+////            $(`#destination_${res.destination.id}`).val(res.destination.id);
+////            $(`#province_${i}`).val(prov);
+////            $(`#city_${i}`).val(res.city.id);
+////            $(`#postalCode_${i}`).val(res.postalCode);
+////            reloadDetail(i,res.detail);
+//        })
+    }
     function reloadDetail(i,res){
         res.map((row,x)=>{
             $(`#size_${i}_${x}`).val(row.size);
@@ -359,53 +845,54 @@
             $(`#weight_${i}_${x}`).html(row.qty);
         })
     }
-
     function addDestination(){
+        getProvince();
         noDestination=noDestination+1;
-        dataDest.push({
-            id:noDestination,
-            destination:{id:"",name:"pilih destinasi"},
-            province:{id:'',name:"pilih provinsi"},
-            city:{id:'',name:"pilih kota"},
-            postalCode:"",
-            detail:[{id:`${noDestination}-${noItems}`,qty:1,size:dataSizeBox[0]}]
-        })
         setTimeout(function(){
-            templateDestination();
-            reloadMaster();
-            setTimeout(()=>loadCity(dataProvince[0].id,noDestination-1),1000)
-        },100)
+            dataDest.push({
+                id:noDestination,
+                type:dataType[idxType],
+                destination:{id:"",name:"pilih destinasi"},
+                province:{id:'',name:"pilih provinsi",data:dataProvince},
+                city:{id:'',name:"pilih kota"},
+                postalCode:"",
+                detail:[{id:`${noDestination}-${noItems}`,qty:1,size:dataSizeBox[0],weight:1}]
+            });
+            console.log("add des",dataDest)
+            setTimeout(()=>{
+                templateDestination()
+            },1000)
+        },200)
     }
     function delDestination(dest){
         noDestination=noDestination-1;
-        const newDataDest = dataDest.filter(res=>res.id!==dataDest[dest].id);
-        dataDest=newDataDest;
-        setTimeout(()=>{
-            templateDestination();
-            reloadMaster()
+        dataDest = dataDest.filter(res=>res.id!==dataDest[dest].id);
+        setTimeout(function(){
+            for(let iProv=0;iProv<dataDest.length;iProv++){
+                getProvince(iProv);
+            }
         },100)
+
     }
-
-
     function addBox(item,dest){
         noItems = noItems+1;
         var idxItem=parseInt(item,10);
         var idxDest=parseInt(dest,10);
         var detail = dataDest[idxDest].detail;
-        detail.push({id:`${noDestination}-${noItems}`,qty:1,size:5})
+        detail.push({id:`${noDestination}-${noItems}`,qty:1,size:5});
         setTimeout(()=>{
             templateDestination();
             reloadDetail(idxDest,detail);
+
         },100)
     }
     function delBox(item,dest){
         if(noItems>1){
             noItems = noItems-1;
-            var idxItem=parseInt(item,10);
-            var idxDest=parseInt(dest,10);
-            var detail = dataDest[idxDest].detail;
-            var newDetail = detail.filter((res)=>res.id!==detail[idxItem-1].id)
-            detail = newDetail;
+            let idxItem=parseInt(item,10);
+            let idxDest=parseInt(dest,10);
+            let detail = dataDest[idxDest].detail;
+            detail = detail.filter((res)=>res.id!==detail[idxItem-1].id)
             dataDest[idxDest].detail = detail;
             setTimeout(()=>{
                 templateDestination();
@@ -422,42 +909,46 @@
             if(qty > 1) qty=qty-1
         }else qty = qty+1;
         setTimeout(()=>{
-            Object.assign(dataDest[dest].detail[item],{qty:qty});
+            Object.assign(dataDest[dest].detail[item],{
+                qty:qty,
+                weight:qty,
+            });
             setTimeout(()=>{
-                templateDestination();
-               reloadDetail(dest,dataDest[dest].detail)
+                $(`#size_${dest}_${item}`).val(dataDest[dest].detail[item].size);
+                $(`#qty${dest}_${item}`).val(dataDest[dest].detail[item].qty)
+                $(`#weight_${dest}_${item}`).html(dataDest[dest].detail[item].qty)
             },100)
         },100)
     }
     function templateDestination(){
-        var html="";
-        var htmlProvince='<option value="">pilih provinsi</option>';
-        var dataDestination=[{id:1,name:"Toyota Bandung"}];
-        var htmlDestination='<option value="">pilih destinasi</option>';
-        var htmlCity='<option value="">pilih kota</option>';
-        var htmlCancel='';
-        var htmlSizeBox='';
-        for(var i=0;i<dataDestination.length;i++){
-            htmlDestination+='<option value="'+dataDestination[i].id+'">'+dataDestination[i].name.toLowerCase()+'</option>';
+        console.log(dataDest)
+
+        let html="";
+        let htmlProvince='<option value="">pilih provinsi</option>';
+        let dataDestination=[{id:1,name:"Toyota Bandung"}];
+        let htmlDestination='<option value="">pilih destinasi</option>';
+        let htmlCity='<option value="">pilih kota</option>';
+        let htmlCancel='';
+        let htmlSizeBox='';
+        for(let iDest=0;iDest<dataDestination.length;iDest++){
+            htmlDestination+='<option value="'+dataDestination[iDest].id+'">'+dataDestination[iDest].name.toLowerCase()+'</option>';
         }
-        for(let i=0;i<dataProvince.length;i++){
-            htmlProvince+='<option value="'+dataProvince[i].id+'">'+dataProvince[i].name.toLowerCase()+'</option>';
+//        for(let iProv=0;iProv<dataProvince.length;iProv++){
+//            htmlProvince+='<option value="'+dataProvince[iProv].id+'">'+dataProvince[iProv].name.toLowerCase()+'</option>';
+//        }
+        for(let iCity=0;iCity<dataCity.length;iCity++){
+            htmlCity+='<option value="'+dataCity[iCity].id+'">'+dataCity[iCity].name.toLowerCase()+'</option>';
         }
-        for(let i=0;i<dataCity.length;i++){
-            htmlCity+='<option value="'+dataCity[i].id+'">'+dataCity[i].name.toLowerCase()+'</option>';
+        for(let iSize=0;iSize<dataSizeBox.length;iSize++){
+            htmlSizeBox+='<option value="'+dataSizeBox[iSize]+'">'+dataSizeBox[iSize]+'</option>';
         }
-        for(var i=0;i<dataSizeBox.length;i++){
-            htmlSizeBox+='<option value="'+dataSizeBox[i]+'">'+dataSizeBox[i]+'</option>';
-        }
-        
-        
-        
-        for(var i=0;i<dataDest.length;i++){
-            var isCancel=i>0;
-            htmlCancel=isCancel?'<div class="col-md-6 container-cancel" onclick="delDestination('+i+')">cancel destinasi</div>':'';
-            var htmlItem='';
-            var detail=dataDest[i].detail;
-            var master=dataDest[i];
+
+        for(let i=0;i<dataDest.length;i++){
+            let isCancel=i>0;
+            htmlCancel=isCancel?'<div class="'+md6+' container-cancel" onclick="delDestination('+i+')">cancel destinasi</div>':'';
+            let htmlItem='';
+            let detail=dataDest[i].detail;
+            let master=dataDest[i];
             for(var x=0;x<dataDest[i].detail.length;x++){
                 var item=detail[x];
                 htmlItem+= '<div class="row wrap_'+i+'">' +
@@ -472,15 +963,19 @@
                     '   </div>' +
                     '</div>' +
                     '<div class="col-md-2 mt-4 wrapper-card-weight">Box Weight<br/>' +
-                    '   <span class="bold"><span id="weight_'+i+'_'+x+'">1</span> Kg</span>' +
+                    '   <span class="bold"><span id="weight_'+i+'_'+x+'">'+item.weight+'</span> Kg</span>' +
                     '</div>' +
                 '</div>';
             }
+            for(let iProv=0;iProv<dataDest[i].province.data.length;iProv++){
+                htmlProvince+='<option value="'+dataDest[i].province.data[iProv].id+'">'+dataDest[i].province.data[iProv].name.toLowerCase()+'</option>';
+            }
+
             html+= '<div class="container">' +
             '   <div class="row">' +
-            '       <div class="col-md-12 bold p-0">' +
+            '       <div class="'+md12+' bold p-0">' +
             '           <div class="row rowCenter">' +
-            '               <div class="col-md-6">' +
+            '               <div class="'+md6+'">' +
             '                   <i class="fa fa-sitemap iconTitle"></i> Pemilihan Destinasi' +
             '               </div>'+htmlCancel+
             '           </div>' +
@@ -489,10 +984,10 @@
             '           <select class="form-control" id="destination_'+master.destination.id+'" onchange="getDestination($(this).val(),'+i+')">'+htmlDestination+'</select>' +
             '       </div>' +
             '       <div class="col-md-3 mt-4">' +
-            '           <select class="form-control" id="province_'+master.province.id+'" onchange="loadCity($(this).val(),'+i+')">' +htmlProvince+'</select>' +
+            '           <select class="form-control" id="province_'+i+'" onchange="loadCity($(this).val(),'+i+')">'+htmlProvince+'</select>' +
             '       </div>' +
             '       <div class="col-md-3 mt-4">' +
-            '           <select class="form-control" id="city_'+master.city.id+'"  onchange="getCity($(this).val(),'+i+')">'+htmlCity+'</select>' +
+            '           <select class="form-control" id="city_'+i+'"  onchange="getCity($(this).val(),'+i+')">'+htmlCity+'</select>' +
             '       </div>' +
             '       <div class="col-md-2 mt-4 p-0">' +
             '           <input type="text" id="postalCode_'+i+'" class="input-custom" placeholder="masukkan kode pos" onchange="getPostalCode($(this).val(),'+i+')">' +
@@ -500,10 +995,10 @@
             '   </div>' +
             '   <div class="container mt-4">' +
             '       <div class="row ml-20 pr-20 mb-20">' +
-            '           <div class="col-md-12 bold p-0">' +
+            '           <div class="'+md12+' bold p-0">' +
             '               <i class="fa fa-cube iconTitle"></i> Pemilihan Box' +
             '           </div>' +
-            '           <div class="col-md-12">'+htmlItem+'</div>' +
+            '           <div class="'+md12+'">'+htmlItem+'</div>' +
             '               <div class="col-md-2 mr-3 p-0 mt-4">' +
             '                    <button onclick="addBox('+x+','+i+')" class="btn btn-action btn-add">'+iAdd+' TAMBAH BOX</button>' +
             '               </div>' +
@@ -518,6 +1013,51 @@
 
         $("#container-destination").html(html);
     }
+    function templateResultDestination(){
+        let html = "";
+        for(let i=0; i<resultDestination.length; i++){
+            let total=resultDestination[i].weight * resultDestination[i].qty;
+            html+='<div class="row justify-content-between mb-20">' +
+                '   <div class="'+md6+' p-0">' +
+                '       <div class="row">' +
+                '           <div class="'+md6+'">Destinasi '+`${i+1}`+'</div><div class="'+md6+'">:</div>' +
+                '       </div>' +
+                '   </div>' +
+                '   <div class="'+md6+' p-0 txt-end">'+resultDestination[i].destination+'</div><hr>' +
+                '       <div class="container">\n' +
+                '           <div class="row justify-content-between">' +
+                '               <div class="'+md12+' bold">Box</div><hr>' +
+                '               <div class="'+md6+'">' +
+                '                   <div class="row">' +
+                '                       <div class="'+md6+'">Ukuran Box</div><div class="'+md6+'">:</div>' +
+                '                   </div>' +
+                '               </div>' +
+                '               <div class="'+md6+' p-0 txt-end">Size '+resultDestination[i].size+'</div><hr>' +
+                '               <div class="'+md6+'">' +
+                '                   <div class="row">' +
+                '                       <div class="'+md6+'">Box Weight</div><div class="'+md6+'">:</div>' +
+                '                   </div>' +
+                '               </div>' +
+                '               <div class="'+md6+' p-0 txt-end">'+resultDestination[i].weight+' Kg</div><hr>' +
+                '               <div class="'+md6+'">' +
+                '                   <div class="row">' +
+                '                       <div class="'+md6+'">Qty Box</div><div class="'+md6+'">:</div>' +
+                '                   </div>' +
+                '               </div>' +
+                '               <div class="'+md6+' p-0 txt-end">'+resultDestination[i].qty+' Pcs</div><hr>' +
+                '               <div class="'+md6+'">' +
+                '                   <div class="row">' +
+                '                       <div class="'+md6+'">Total Berat Box</div><div class="'+md6+'">:</div>' +
+                '                   </div>' +
+                '               </div>' +
+                '               <div class="'+md6+' p-0 txt-end">'+total+' Pcs</div><hr>' +
+                '           </div>' +
+                '       </div>' +
+                '   </div>';
+            html+='<div class="container mt-4 p-0"><hr class="pembatas"/></div>';
+        }
+        $("#result-destination").html(html)
+    }
 
 
     var baseUrl='http://www.emsifa.com/api-wilayah-indonesia/api/';
@@ -528,14 +1068,28 @@
             dataType:"JSON",
             type:"GET",
             success:function(res){
-                // Object.assign(dataDest[idxDest],{city:{id:res[0].id,name:res[0].name}})
                 dataProvince=res;
-                loadCity(res[0].id,0);
+//                var html="";
+//                for(let i=0;i<res.length;i++){
+//                    html+='<option value="'+res[i].id+'">'+res[i].name.toLowerCase()+'</option>'
+//                }
+//                setTimeout(()=>{
+//                    $("#province_"+idxDest).html(html);
+//                    setTimeout(()=>{
+//                        Object.assign(dataDest[idxDest],{
+//                            province:{
+//                                id:dataDest[idxDest].province.id,
+//                                name:dataDest[idxDest].province.name
+//                            },
+//                        });
+//                        console.log(dataDest)
+//                        loadCity(res[0].id,idxDest);
+//                    })
+//                },200)
             }
         });
     }
     function getPostalCode(code,dest){
-        console.log(code)
         Object.assign(dataDest[dest],{postalCode:code})
     }
     function getSize(size,dest,item){
@@ -543,31 +1097,34 @@
     }
     function getCity(cityId,dest){
         var newDataDest= dataDest[dest];
-        var cityName=$(`#city_${newDataDest.city.id} option:selected`).text();
-        Object.assign(dataDest[dest],{city:{id:cityId,name:cityName}})
+        var cityName=$(`#city_${dest}`).find(`option:selected`).text();
+        Object.assign(dataDest[dest],{city:{id:cityId,name:cityName.toLowerCase()}})
     }
     function getDestination(destId,dest){
         var newDataDest= dataDest[dest];
-        var destName=$(`#destination_${newDataDest.destination.id} option:selected`).text();
+        var destName=$(`#destination_${newDataDest.destination.id}`).find(`option:selected`).text();
         Object.assign(dataDest[dest],{destination:{id:destId,name:destName}})
     }
-    
+
     function loadCity(provinceId,dest){
-        var newDataDest= dataDest[dest];
-        var provinceName=$(`#province_${newDataDest.province.id} option:selected`).text();
-        Object.assign(dataDest[dest],{province:{id:provinceId,name:provinceName}})
-        var html="<option>pilih kota</option>";
+
+        var provinceName=$(`#city_${dest}`).find(`option:selected`).text();
+        Object.assign(dataDest[dest],{city:{id:provinceId,name:provinceName.toLowerCase()}});
         $.ajax({
             url:`${baseUrl}regencies/${provinceId}.json`,
             dataType:"JSON",
             type:"GET",
             success:function(res){
                 dataCity=res;
+                var html='';
                 for(var i=0;i<res.length;i++){
                     html+='<option value="'+res[i].id+'">'+res[i].name.toLowerCase()+'</option>';
                 }
                  setTimeout(function(){
-                    $(`#city_${newDataDest.city.id}`).html(html)
+                    $(`#city_${dest}`).html(html);
+                    setTimeout(()=>{
+//                        $("#province_"+dest).val(provinceId);
+                    },1000)
                 },100)
             }
         });
