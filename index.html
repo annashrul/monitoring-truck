@@ -818,27 +818,13 @@
         checkPage(true)
     }
     function reloadMaster(){
-//        for(let i=0;i<dataDest.length;i++){
-//            let res=dataDest[i];
-//            let prov=res.province.id;
-//            if(prov===""){
-//                prov=dataProvince[0].id;
-//            }
-//            $(`#province_${i}`).val(prov);
-//        }
-//        dataDest.map((res,i)=>{
-//            console.log(res);
-//            let prov=res.province.id;
-//            if(prov===""){
-//                prov=dataProvince[0].id;
-//            }
-//            console.log(prov)
-////            $(`#destination_${res.destination.id}`).val(res.destination.id);
-////            $(`#province_${i}`).val(prov);
-////            $(`#city_${i}`).val(res.city.id);
-////            $(`#postalCode_${i}`).val(res.postalCode);
-////            reloadDetail(i,res.detail);
-//        })
+        dataDest.map((res,i)=>{
+            $(`#destination_${res.destination.id}`).val(res.destination.id);
+            $(`#province_${i}`).val(res.province);
+            $(`#city_${i}`).val(res.city.id);
+            $(`#postalCode_${i}`).val(res.postalCode);
+            reloadDetail(i,res.detail);
+        })
     }
     function reloadDetail(i,res){
         res.map((row,x)=>{
@@ -881,7 +867,11 @@
         detail.push({id:`${noDestination}-${noItems}`,qty:1,size:5});
         setTimeout(()=>{
             templateDestination();
+//            reloadDetail();
             reloadDetail(idxDest,detail);
+            setTimeout(()=>{
+                reloadMaster();
+            },200)
 
         },100)
     }
@@ -964,9 +954,9 @@
                     '</div>' +
                 '</div>';
             }
-            for(let iProv=0;iProv<dataDest[i].province.data.length;iProv++){
-                htmlProvince+='<option value="'+dataDest[i].province.data[iProv].id+'">'+dataDest[i].province.data[iProv].name.toLowerCase()+'</option>';
-            }
+//            for(let iProv=0;iProv<dataDest[i].province.data.length;iProv++){
+//                htmlProvince+='<option value="'+dataDest[i].province.data[iProv].id+'">'+dataDest[i].province.data[iProv].name.toLowerCase()+'</option>';
+//            }
 
             html+= '<div class="container">' +
             '   <div class="row">' +
@@ -1012,43 +1002,50 @@
     }
     function templateResultDestination(){
         let html = "";
-        for(let i=0; i<resultDestination.length; i++){
-            let total=resultDestination[i].weight * resultDestination[i].qty;
+        let totalBoxDetail=0;
+        for(let i=0; i<dataDest.length; i++){
+            let htmlDetail="";
+            let resDetail=dataDest[i].detail;
+            for(let iDetail=0;iDetail<resDetail.length;iDetail++){
+                let totDetail=parseInt(resDetail[iDetail].weight,10) * parseInt(resDetail[iDetail].qty,10);
+                totalBoxDetail=totalBoxDetail+totDetail;
+                htmlDetail+=`<div class="${md12} bold">Box ${iDetail+1}</div>`;
+                htmlDetail+=`<div class="${md6}">
+                    <div class="row">
+                        <div class="${md6}">Ukuran Box</div>
+                    </div>
+                </div>`;
+                htmlDetail+=`<div class="${md6} p-0 txt-end">Size ${resDetail[iDetail].size}</div>`;
+                htmlDetail+=`<div class="${md6}">
+                    <div class="row">
+                        <div class="${md6}">Box Weight</div>
+                    </div>
+                </div>`;
+                htmlDetail+=`<div class="${md6} p-0 txt-end">${resDetail[iDetail].weight} Kg</div>`;
+                htmlDetail+=`<div class="${md6}">
+                    <div class="row">
+                        <div class="${md6}">Qty Box</div>
+                    </div>
+                </div>`;
+                htmlDetail+=`<div class="${md6} p-0 txt-end">${resDetail[iDetail].qty} Pcs</div>`;
+                htmlDetail+=`<div class="${md6}">
+                    <div class="row">
+                        <div class="${md6}">Total Berat Box</div>
+                    </div>
+                </div>`;
+                htmlDetail+=`<div class="${md6} p-0 txt-end">${parseInt(resDetail[iDetail].weight,10) * parseInt(resDetail[iDetail].qty,10)} Kg</div>`;
+                htmlDetail+='<hr>';
+            }
+
             html+='<div class="row justify-content-between mb-20">' +
                 '   <div class="'+md6+' p-0">' +
                 '       <div class="row">' +
                 '           <div class="'+md6+'">Destinasi '+`${i+1}`+'</div><div class="'+md6+'">:</div>' +
                 '       </div>' +
                 '   </div>' +
-                '   <div class="'+md6+' p-0 txt-end">'+resultDestination[i].destination+'</div><hr>' +
+                '   <div class="'+md6+' p-0 txt-end">'+dataDest[i].destination.name+'</div><hr>' +
                 '       <div class="container">\n' +
-                '           <div class="row justify-content-between">' +
-                '               <div class="'+md12+' bold">Box</div><hr>' +
-                '               <div class="'+md6+'">' +
-                '                   <div class="row">' +
-                '                       <div class="'+md6+'">Ukuran Box</div><div class="'+md6+'">:</div>' +
-                '                   </div>' +
-                '               </div>' +
-                '               <div class="'+md6+' p-0 txt-end">Size '+resultDestination[i].size+'</div><hr>' +
-                '               <div class="'+md6+'">' +
-                '                   <div class="row">' +
-                '                       <div class="'+md6+'">Box Weight</div><div class="'+md6+'">:</div>' +
-                '                   </div>' +
-                '               </div>' +
-                '               <div class="'+md6+' p-0 txt-end">'+resultDestination[i].weight+' Kg</div><hr>' +
-                '               <div class="'+md6+'">' +
-                '                   <div class="row">' +
-                '                       <div class="'+md6+'">Qty Box</div><div class="'+md6+'">:</div>' +
-                '                   </div>' +
-                '               </div>' +
-                '               <div class="'+md6+' p-0 txt-end">'+resultDestination[i].qty+' Pcs</div><hr>' +
-                '               <div class="'+md6+'">' +
-                '                   <div class="row">' +
-                '                       <div class="'+md6+'">Total Berat Box</div><div class="'+md6+'">:</div>' +
-                '                   </div>' +
-                '               </div>' +
-                '               <div class="'+md6+' p-0 txt-end">'+total+' Pcs</div><hr>' +
-                '           </div>' +
+                '           <div class="row justify-content-between">'+htmlDetail+'</div>' +
                 '       </div>' +
                 '   </div>';
             html+='<div class="container mt-4 p-0"><hr class="pembatas"/></div>';
