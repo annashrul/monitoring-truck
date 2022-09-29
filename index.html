@@ -28,7 +28,7 @@
         }
         .wrapper-card{
             margin-right: 10px;
-            border:2px solid #EEEEEE;
+            border:2px solid #DFDFDF;
             padding:25px;
             text-align: center;
             border-radius: 10px;
@@ -40,19 +40,10 @@
             border-color: red !important;
         }
 
-        .input-custom{
-            padding: 27px !important;
-            height: auto !important;
-            border: 2px solid #EEEEEE;
-            border-radius: 10px;
-            color: grey !important;
-            font-weight: bold;
-        }
-
         .input-custom-group{
             padding: 20px !important;
             height: auto !important;
-            border: 2px solid #EEEEEE;
+            border: 2px solid #DFDFDF;
             border-radius: 10px;
             color: grey !important;
             font-weight: bold;
@@ -69,24 +60,6 @@
             box-shadow:none !important;
 
         }
-        button.btn-no-border{
-            border: none !important;
-            background-color: transparent !important;
-        }
-        button.btn-no-border:hover{
-            border: none !important;
-            background-color: transparent !important;
-            color: grey !important;
-            font-weight: bold;
-        }
-        button.btn-no-border:focus{
-            border: none !important;
-            background-color: transparent !important;
-            color: grey !important;
-            font-weight: bold;
-            box-shadow:none !important;
-        }
-
         .wrapper-card-weight{
             margin-left: 10px;
             border:2px solid #EEEEEE;
@@ -101,60 +74,17 @@
             background-color: transparent !important;
             cursor: not-allowed;
         }
-        .btn-action-add-destinatoin{
-            padding: 15px;
-            border-radius: 10px;
-            border-color: transparent;
-            font-weight: bold;
-            background-color: black;
-            color: white;
-        }
-        .btn-action-add-destinatoin:hover{
-            background-color: black;
-            color: white;
-        }
-        .btn-action{
-            padding: 15px;
-            border-radius: 10px;
-            border-color: transparent;
-            font-weight: bold;
-            width: 100%;
-        }
-        .btn-add{
-            background-color: #EDF2FF;
-            color: black;
-        }
-        .btn-del{
-            background-color: #F7941E;
-            color: white;
-        }
-        .btn-add:hover{
-            background-color: #EDF2FF;
-            color: black;
-            border-color: #EDF2FF;
-        }
-        .btn-del:hover{
-            background-color: #F7941E;
-            color: white;
-            border-color: #F7941E;
-
-        }
-
         .iconTitle{
             font-size: 30px;
-            border: 2px solid #EEEEEE;
+            border: 2px solid #9A9A9A;
             border-radius: 100%;
             padding:10px;
             margin-right: 10px
         }
-        .rowCenter{
-            vertical-align: middle;align-content: center;align-items: center;
-        }
         .ml-20{margin-left:20px}
         .pr-20{padding-right: 20px}
         .mb-20{margin-bottom: 20px}
-        .pembatas{border-style: dashed;border-width: 1px;border-color: #eeeeee;}
-        .container-cancel{float:right;text-align: right;color:orange;cursor: pointer;}
+        .pembatas{border-style: dashed;border-width: 1px;border-color: grey;}
         .btn-href{
             padding: 15px;
             border-radius: 10px;
@@ -183,16 +113,19 @@
         }
         .txt-end{text-align: end;color: #6082D8}
         .title-txt-end{
-            color: #C0C0C0;
+            color: grey;
         }
         .card-active{
             border:2px solid red;
         }
         .wrap-truck{
-            border:2px solid #EEEEEE;
+            border:2px solid #DFDFDF;
             margin-right: 10px;
             border-radius: 10px;
             padding: 10px;
+        }
+        button[disabled]{
+            cursor: not-allowed;
         }
 
 
@@ -228,15 +161,16 @@
             <div class="col-md-12 p-0 bold mt-4">
                 Pilih Jenis Truck
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 mb-20">
                 <div class="row" id="result-type"></div>
             </div>
         </div>
     </div>
-    <div class="container mt-4 p-0"><hr class="pembatas"></div>
+
+    <div class="container p-0"><hr style="border-style: dashed"/></div>
     <div class="container p-0" id="result-destinasi"></div>
-    <div class="container mt-4 p-0"><hr class="pembatas"></div>
-    <div class="container mb-20 p-0" id="result-truck"></div>
+    <div class="container p-0"><hr style="border-style: dashed"/></div>
+    <div class="container mb-20" id="result-truck"></div>
 
 
 </div>
@@ -375,7 +309,6 @@
             setType(localStorage.indexTruckType);
             checkPage(false)
         }
-        console.log(localStorage.page)
     });
 
     function handlePrev(){
@@ -385,11 +318,15 @@
     function handleNext(){
         localStorage.setItem("page","2");
         setTimeout(()=>checkPage(false),100);
+
     }
     function checkPage(isPage1){
         $("#wrapper-page-1").css({"display":isPage1?"block":"none"});
         $("#wrapper-page-2").css({"display":isPage1?"none":"block"});
         if(!isPage1){
+            $(".btn-prev").prop("disabled",false);
+            $(".btn-next").prop("disabled",true)
+
             const size=dataType[localStorage.indexTruckType];
             const dataClock = getClock();
             const datePage2=dataClock.currentDate.replaceAll("-","/");
@@ -399,7 +336,6 @@
             htmlTypeTruck+=generateBetween("Size Truck",size);
             htmlTypeTruck+=generateBetween("Dimensi Truck","30 m");
             htmlTypeTruck+=generateBetween("Kapasitas Truck","100 kg")
-
             const newDestinasi=data.filter((res,i)=>res.truckSize===size);
             for(let i=0;i<newDestinasi.length;i++){
                 for(let j=0;j<newDestinasi[i].destination.length;j++){
@@ -442,13 +378,18 @@
                     htmlDestinasi+=`<div class="row"><div class="container"><hr  class="pembatas"></div></div>`;
                 }
             }
-
             $("#result-date").html(htmlDate);
             $("#result-truck-type").html(htmlTypeTruck);
             $("#result-destination").html(htmlDestinasi);
 
+        }else{
+            if(localStorage.indexTruckType!==undefined){
+                setType(localStorage.indexTruckType)
+            }else{
+                $(".btn-prev").prop("disabled",true);
+                $(".btn-next").prop("disabled",true)
+            }
         }
-
     }
 
 
@@ -490,6 +431,8 @@
     function generateDestinasi(truckSize){
         generateTruck(truckSize);
         const newData = data.filter((res)=>truckSize===res.truckSize);
+        $(".btn-prev").prop("disabled",newData.length>0&&localStorage.page==="1");
+        $(".btn-next").prop("disabled",newData.length===0);
         let html="";
         for(let i=0;i<newData.length;i++){
             for(let j=0;j<newData[i].destination.length;j++){
@@ -526,7 +469,7 @@
                         ${boxHtml}
                     </div>
 
-                </div>`;
+                </div>`
             }
         }
         $("#result-destinasi").html(html);
@@ -554,7 +497,16 @@
         }else{
             $("#card-type-${i}").removeClass("card-active")
         }
+//        const newData=data.filter((res,i)=>res.truckSize===dataType[localStorage.indexTruckType]);
+//        if(newData.length>0){
+//            $(".btn-prev").prop("disabled",true)
+//            $(".btn-next").prop("disabled",false)
+//        }else{
+//            $(".btn-prev").prop("disabled",true)
+//            $(".btn-next").prop("disabled",true)
+//        }
         generateDestinasi(dataType[i]);
+
     }
 
     function generateInput(val){
