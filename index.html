@@ -644,11 +644,12 @@
 </html>
 
 <script>
-    var noItems=1;
-    var noDestination=1;
-    var dataProvince=[];
-    var dataCity=[];
-    var iMin='<i class="fa fa-minus"></i>';
+    var noItems         =1;
+    var noDestination   =1;
+    let dataDestination =[{id:1,name:"Toyota Bandung"},{id:2,name:"Toyota Bogor"},{id:3,name:"Toyota Jakarta"}];
+    var dataProvince    =[];
+    var dataCity        =[];
+    var iMin            ='<i class="fa fa-minus"></i>';
     var iAdd='<i class="fa fa-plus"></i>';
     var page=1;
     var md6="col-md-6";
@@ -710,12 +711,11 @@
     $(document).ready(function() {
         getProvince(0);
 
-//        var htmlType="";
-//        for(var i=0;i<dataType.length;i++){
-//            htmlType+='<div class="col-md-2 mt-4 wrapper-card" id="card-type-'+i+'" onclick="setType('+i+')">Truck Size '+dataType[i]+'</div>'
-//        }
-//
-//        $("#result-type").html(htmlType)
+        var htmlType="";
+        for(var i=0;i<dataType.length;i++){
+            htmlType+='<div class="col-md-2 mt-4 wrapper-card" id="card-type-'+i+'" onclick="setType('+i+')">Truck Size '+dataType[i]+'</div>'
+        }
+        $("#result-type").html(htmlType)
 //        templateResultDestination();
 //        $('#address').select2({placeholder: 'masukkan alamat'});
         setTimeout(function(){
@@ -778,7 +778,6 @@
             setTimeout(()=>{
                 templateResultDestination()
             },100);
-            console.log("page 2",dataDest);
         }
 
     }
@@ -788,22 +787,22 @@
             for(let i=0;i<dataDest.length;i++){
                 if(dataDest[i].destination.id===""){
                     alert("destinasi tidak boleh kosong");
-                    $(`#destination_${dataDest[i].destination.id}`).focus()
+                    $(`#destination_${dataDest[i].destination.id}`).focus();
                     return;
                 }
                 if(dataDest[i].province.id===""){
                     alert("provinsi tidak boleh kosong");
-                    $(`#province_${i}`).focus()
+                    $(`#province_${i}`).focus();
                     return;
                 }
                 if(dataDest[i].city.id===""){
                     alert("kota tidak boleh kosong");
-                    $(`#city_${i}`).focus()
+                    $(`#city_${i}`).focus();
                     return;
                 }
                 if(dataDest[i].postalCode===""){
                     alert("kode pos tidak boleh kosong");
-                    $(`#postalCode_${i}`).focus()
+                    $(`#postalCode_${i}`).focus();
                     return;
                 }
             }
@@ -820,7 +819,7 @@
     function reloadMaster(){
         dataDest.map((res,i)=>{
             $(`#destination_${res.destination.id}`).val(res.destination.id);
-            $(`#province_${i}`).val(res.province);
+            $(`#province_${i}`).val(res.province.id);
             $(`#city_${i}`).val(res.city.id);
             $(`#postalCode_${i}`).val(res.postalCode);
             reloadDetail(i,res.detail);
@@ -847,45 +846,89 @@
                 detail:[{id:`${noDestination}-${noItems}`,qty:1,size:dataSizeBox[0],weight:1}]
             });
             setTimeout(()=>{
-                templateDestination()
+                templateDestination();
+                setTimeout(()=>{
+                    for(let j=0;j<dataDest.length;j++){
+                        $(`#destination_${dataDest[j].destination.id}`).val(dataDest[j].destination.id)
+                        $(`#province_${j}`).val(dataDest[j].province.id);
+                        $(`#city_${j}`).val(dataDest[j].city.id);
+                        $(`#postalCode_${j}`).val(dataDest[j].postalCode);
+                        setTimeout(()=>{
+                            reloadDetail(j,dataDest[j].detail);
+                        },400)
+                    }
+                },300)
             },100)
         },200)
     }
     function delDestination(dest){
+        getProvince();
         noDestination=noDestination-1;
         dataDest = dataDest.filter(res=>res.id!==dataDest[dest].id);
         setTimeout(function(){
             templateDestination();
+            setTimeout(()=>{
+                for(let j=0;j<dataDest.length;j++){
+                    loadCity(dataDest[j].province.id,j);
+                    $(`#destination_${dataDest[j].destination.id}`).val(dataDest[j].destination.id)
+                    $(`#province_${j}`).val(dataDest[j].province.id);
+                    $(`#city_${j}`).val(dataDest[j].city.id);
+                    $(`#postalCode_${j}`).val(dataDest[j].postalCode);
+                    setTimeout(()=>{
+                        reloadDetail(j,dataDest[j].detail);
+                    },300)
+                }
+            },200)
         },100)
 
     }
     function addBox(item,dest){
+        console.log("sebelum",dataDest)
         noItems = noItems+1;
         var idxItem=parseInt(item,10);
         var idxDest=parseInt(dest,10);
         var detail = dataDest[idxDest].detail;
-        detail.push({id:`${noDestination}-${noItems}`,qty:1,size:5});
+        detail.push({id:`${noDestination}-${noItems}`,qty:1,size:dataSizeBox[0],weight:1});
         setTimeout(()=>{
             templateDestination();
-//            reloadDetail();
-            reloadDetail(idxDest,detail);
             setTimeout(()=>{
-                reloadMaster();
+                for(let j=0;j<dataDest.length;j++){
+                    loadCity(dataDest[j].province.id,j);
+                    $(`#destination_${dataDest[j].destination.id}`).val(dataDest[j].destination.id)
+                    $(`#province_${j}`).val(dataDest[j].province.id);
+                    $(`#city_${j}`).val(dataDest[j].city.id);
+                    $(`#postalCode_${j}`).val(dataDest[j].postalCode);
+                    setTimeout(()=>{
+                        reloadDetail(j,dataDest[j].detail);
+                    },300)
+                }
             },200)
-
         },100)
     }
     function delBox(item,dest){
         if(noItems>1){
+//            getProvince();
             noItems = noItems-1;
             let idxItem=parseInt(item,10);
             let idxDest=parseInt(dest,10);
             let detail = dataDest[idxDest].detail;
-            detail = detail.filter((res)=>res.id!==detail[idxItem-1].id)
+            detail = detail.filter((res)=>res.id!==detail[idxItem-1].id);
             dataDest[idxDest].detail = detail;
             setTimeout(()=>{
                 templateDestination();
-                reloadDetail(idxDest,detail);
+                setTimeout(()=>{
+                    for(let j=0;j<dataDest.length;j++){
+                        loadCity(dataDest[j].province.id,j);
+                        $(`#destination_${dataDest[j].destination.id}`).val(dataDest[j].destination.id)
+                        $(`#province_${j}`).val(dataDest[j].province.id);
+                        $(`#city_${j}`).val(dataDest[j].city.id);
+                        $(`#postalCode_${j}`).val(dataDest[j].postalCode);
+                        setTimeout(()=>{
+                            reloadDetail(j,dataDest[j].detail);
+                            console.log("delete box sesudah",dataDest)
+                        },300)
+                    }
+                },200)
             },100)
         }
 
@@ -912,7 +955,6 @@
     function templateDestination(){
         let html="";
         let htmlProvince='<option value="">pilih provinsi</option>';
-        let dataDestination=[{id:1,name:"Toyota Bandung"}];
         let htmlDestination='<option value="">pilih destinasi</option>';
         let htmlCity='<option value="">pilih kota</option>';
         let htmlCancel='';
@@ -954,10 +996,6 @@
                     '</div>' +
                 '</div>';
             }
-//            for(let iProv=0;iProv<dataDest[i].province.data.length;iProv++){
-//                htmlProvince+='<option value="'+dataDest[i].province.data[iProv].id+'">'+dataDest[i].province.data[iProv].name.toLowerCase()+'</option>';
-//            }
-
             html+= '<div class="container">' +
             '   <div class="row">' +
             '       <div class="'+md12+' bold p-0">' +
@@ -1006,7 +1044,11 @@
         for(let i=0; i<dataDest.length; i++){
             let htmlDetail="";
             let resDetail=dataDest[i].detail;
+            let no=0
+            console.log("nomor",dataDest[i]);
+
             for(let iDetail=0;iDetail<resDetail.length;iDetail++){
+                no+=1;
                 let totDetail=parseInt(resDetail[iDetail].weight,10) * parseInt(resDetail[iDetail].qty,10);
                 totalBoxDetail=totalBoxDetail+totDetail;
                 htmlDetail+=`<div class="${md12} bold">Box ${iDetail+1}</div>`;
@@ -1098,6 +1140,7 @@
         var newDataDest= dataDest[dest];
         var destName=$(`#destination_${newDataDest.destination.id}`).find(`option:selected`).text();
         Object.assign(dataDest[dest],{destination:{id:destId,name:destName}})
+        console.log(dataDest)
     }
 
     function loadCity(provinceId,dest){
